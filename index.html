@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmileCare Dental Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  :root {
+    --teal-dark: #0d6e6e;
+    --teal-mid: #0e8585;
+    --teal-light: #12a0a0;
+    --teal-pale: #e0f5f5;
+    --teal-xpale: #f0fafa;
+    --accent: #f4a024;
+    --text-dark: #1a2e2e;
+    --text-mid: #3d5a5a;
+  }
+  * { scroll-behavior: smooth; box-sizing: border-box; }
+  body { font-family: 'Nunito', sans-serif; color: var(--text-dark); background: #fff; }
+  h1,h2,h3 { font-family: 'Playfair Display', serif; }
+
+  /* Navbar */
+  .navbar { background: #fff; box-shadow: 0 2px 20px rgba(13,110,110,0.10); position: sticky; top: 0; z-index: 100; }
+  .nav-link { color: var(--text-mid); font-weight: 600; font-size: 15px; padding: 6px 14px; border-radius: 8px; transition: all 0.2s; }
+  .nav-link:hover, .nav-link.active { color: var(--teal-dark); background: var(--teal-pale); }
+  .btn-primary { background: var(--teal-dark); color: #fff; font-weight: 700; padding: 10px 26px; border-radius: 50px; transition: all 0.2s; font-size: 14px; border: none; cursor: pointer; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,110,110,0.25); }
+  .btn-outline { border: 2px solid var(--teal-dark); color: var(--teal-dark); font-weight: 700; padding: 10px 26px; border-radius: 50px; transition: all 0.2s; font-size: 14px; background: transparent; cursor: pointer; }
+  .btn-outline:hover { background: var(--teal-dark); color: #fff; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #0a4f4f 0%, #0d6e6e 40%, #0f8080 70%, #12a0a0 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 280px; height: 280px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+
+  /* Section titles */
+  .section-tag { display: inline-block; background: var(--teal-pale); color: var(--teal-dark); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: 12px; }
+  .section-title { font-size: 34px; color: var(--text-dark); line-height: 1.25; }
+
+  /* Cards */
+  .service-card { background: #fff; border: 1.5px solid #e5f2f2; border-radius: 18px; padding: 24px; transition: all 0.3s; cursor: default; }
+  .service-card:hover { border-color: var(--teal-light); box-shadow: 0 12px 36px rgba(13,110,110,0.12); transform: translateY(-4px); }
+  .icon-wrap { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
+
+  /* Tab buttons */
+  .tab-btn { padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1.5px solid #d4ebeb; color: var(--text-mid); background: #fff; }
+  .tab-btn:hover { border-color: var(--teal-dark); color: var(--teal-dark); }
+  .tab-btn.active { background: var(--teal-dark); color: #fff; border-color: var(--teal-dark); }
+
+  /* Gallery */
+  .gallery-item { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; aspect-ratio: 4/3; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .gallery-item:hover img { transform: scale(1.07); }
+  .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,110,110,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 18px; }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+
+  /* Lightbox */
+  .lightbox { position: fixed; inset: 0; background: rgba(10,40,40,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .lightbox.open { display: flex; }
+  .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 16px; object-fit: contain; }
+
+  /* Stats */
+  .stat-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px 28px; text-align: center; }
+
+  /* Why Us */
+  .why-card { background: var(--teal-xpale); border: 1.5px solid #c8e8e8; border-radius: 18px; padding: 28px 22px; text-align: center; transition: all 0.3s; }
+  .why-card:hover { background: var(--teal-dark); color: #fff; transform: translateY(-4px); }
+  .why-card:hover p { color: rgba(255,255,255,0.8); }
+  .why-card:hover .why-icon { background: rgba(255,255,255,0.2); }
+
+  /* Testimonials */
+  .testi-card { background: #fff; border: 1.5px solid #e5f2f2; border-radius: 20px; padding: 28px; }
+  .stars { color: var(--accent); font-size: 16px; letter-spacing: 2px; }
+
+  /* Footer */
+  footer { background: #0d3535; color: #fff; }
+
+  /* Page navigation */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Mobile menu */
+  .mobile-menu { display: none; }
+  .mobile-menu.open { display: block; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--teal-xpale); }
+  ::-webkit-scrollbar-thumb { background: var(--teal-mid); border-radius: 10px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+
+  /* Topbar */
+  .topbar { background: var(--teal-dark); color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; padding: 7px 0; }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+    <div style="display:flex;gap:20px;align-items:center;">
+      <span>📞 +91 98765 43210</span>
+      <span>✉️ info@smilecaredental.com</span>
+    </div>
+    <span>⏰ Mon–Sat: 9:00 AM – 7:00 PM &nbsp;|&nbsp; Emergency: 24/7</span>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div style="max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:46px;height:46px;background:linear-gradient(135deg,#0d6e6e,#12a0a0);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;">🦷</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--teal-dark);line-height:1.1;">SmileCare Dental</div>
+        <div style="font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:0.5px;">Advanced Dental Care</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;align-items:center;" class="hidden md:flex">
+      <a href="#" onclick="showPage('home')" class="nav-link active" id="nav-home">Home</a>
+      <a href="#" onclick="showPage('about')" class="nav-link" id="nav-about">About</a>
+      <a href="#" onclick="showPage('services')" class="nav-link" id="nav-services">Services</a>
+      <a href="#" onclick="showPage('gallery')" class="nav-link" id="nav-gallery">Gallery</a>
+      <a href="#" onclick="showPage('contact')" class="nav-link" id="nav-contact">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button class="btn-primary" onclick="showPage('contact')">Book Appointment</button>
+      <button onclick="toggleMobile()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--teal-dark);" class="md:hidden">☰</button>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu" style="background:#fff;border-top:1px solid #e5f2f2;padding:12px 20px;">
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <a href="#" onclick="showPage('home');toggleMobile()" class="nav-link">Home</a>
+      <a href="#" onclick="showPage('about');toggleMobile()" class="nav-link">About</a>
+      <a href="#" onclick="showPage('services');toggleMobile()" class="nav-link">Services</a>
+      <a href="#" onclick="showPage('gallery');toggleMobile()" class="nav-link">Gallery</a>
+      <a href="#" onclick="showPage('contact');toggleMobile()" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section style="position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;">
+    <img src="https://media.istockphoto.com/id/2153871515/photo/dentist-performing-a-checkup-on-patient.webp?a=1&b=1&s=612x612&w=0&k=20&c=XN6sDf_Vl3R5FR84pgZ8dwB94MZgjvt4PC1gcpk8QPw=" alt="Dentist performing checkup on patient" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;filter:brightness(1);"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,28,28,0.78) 0%,rgba(4,28,28,0.45) 55%,rgba(4,28,28,0.05) 100%);z-index:1;"></div>
+    <div style="max-width:1200px;margin:0 auto;padding:100px 28px 110px;position:relative;z-index:2;width:100%;">
+      <div class="fade-up" style="max-width:560px;">
+        <div style="display:inline-block;background:rgba(18,160,160,0.25);border:1px solid rgba(18,160,160,0.5);color:#a8e6e6;font-size:12px;font-weight:700;letter-spacing:1.5px;padding:6px 16px;border-radius:50px;margin-bottom:20px;text-transform:uppercase;">✦ Trusted Dental Care Since 2010</div>
+        <h1 style="font-size:54px;color:#fff;line-height:1.12;margin-bottom:18px;font-weight:700;">Your Perfect Smile <br/><span style="color:#5dd8d8;">Starts Here</span></h1>
+        <p style="color:rgba(255,255,255,0.82);font-size:16px;line-height:1.75;margin-bottom:34px;">Comprehensive dental care with cutting-edge technology and a gentle touch. From routine check-ups to advanced smile transformations.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;">
+          <button class="btn-primary" onclick="showPage('contact')" style="background:var(--teal-dark);color:#fff;padding:13px 28px;font-size:15px;display:flex;align-items:center;gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book Appointment
+          </button>
+          <a href="tel:+919876543210" style="border:2px solid rgba(255,255,255,0.55);color:#fff;font-weight:700;padding:13px 28px;border-radius:50px;font-size:15px;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call Now
+          </a>
+        </div>
+        <!-- Stats -->
+        <div style="display:flex;gap:0;flex-wrap:wrap;">
+          <div style="padding:16px 28px 16px 0;border-right:1px solid rgba(255,255,255,0.2);margin-right:28px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5dd8d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span id="cnt-patients" style="font-size:28px;font-weight:800;color:#fff;line-height:1;">0</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;letter-spacing:0.5px;">Happy Patients</div>
+          </div>
+          <div style="padding:16px 28px 16px 0;border-right:1px solid rgba(255,255,255,0.2);margin-right:28px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5dd8d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="cnt-years" style="font-size:28px;font-weight:800;color:#fff;line-height:1;">0</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;letter-spacing:0.5px;">Years Experience</div>
+          </div>
+          <div style="padding:16px 0;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5dd8d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span id="cnt-services" style="font-size:28px;font-weight:800;color:#fff;line-height:1;">0</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;letter-spacing:0.5px;">Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Highlight -->
+  <section style="padding:70px 20px;background:#fff;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:50px;">
+        <div class="section-tag">What We Offer</div>
+        <h2 class="section-title">Comprehensive Dental Services</h2>
+        <p style="color:var(--text-mid);margin-top:12px;font-size:16px;max-width:560px;margin-left:auto;margin-right:auto;">From routine care to advanced procedures — all under one roof with the latest technology.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:28px;">
+
+        <div style="text-align:center;cursor:default;" class="svc-circle-item">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#e0f5f5,#b2e4e4);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(13,110,110,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#0d6e6e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Diagnosis</h3>
+          <p style="font-size:12px;color:var(--text-mid);">X-Ray & Oral Screening</p>
+        </div>
+
+        <div style="text-align:center;cursor:default;">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#e8f5e8,#b8e6b8);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(46,125,50,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Preventive Care</h3>
+          <p style="font-size:12px;color:var(--text-mid);">Cleaning & Fluoride</p>
+        </div>
+
+        <div style="text-align:center;cursor:default;">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#fef3e0,#fdd89a);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(176,96,0,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#b06000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 5 5 5 9c0 2.5 1 4.5 2.5 6L9 21h6l1.5-6C18 13.5 19 11.5 19 9c0-4-3-7-7-7z"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Restorative</h3>
+          <p style="font-size:12px;color:var(--text-mid);">Crowns, RCT & Bridges</p>
+        </div>
+
+        <div style="text-align:center;cursor:default;">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#fce8f0,#f9b8d4);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(173,20,87,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ad1457" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 3"/><circle cx="18" cy="5" r="3" fill="#ad1457" stroke="none"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Cosmetic</h3>
+          <p style="font-size:12px;color:var(--text-mid);">Whitening & Veneers</p>
+        </div>
+
+        <div style="text-align:center;cursor:default;">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#ede8fc,#c9bef5);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(94,53,177,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#5e35b1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="7" cy="6" r="2" fill="#5e35b1" stroke="none"/><circle cx="17" cy="12" r="2" fill="#5e35b1" stroke="none"/><circle cx="7" cy="18" r="2" fill="#5e35b1" stroke="none"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Orthodontics</h3>
+          <p style="font-size:12px;color:var(--text-mid);">Braces & Aligners</p>
+        </div>
+
+        <div style="text-align:center;cursor:default;">
+          <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#e8eefa,#b8c8f5);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 20px rgba(21,101,192,0.15);transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1565c0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><path d="M8 6h8a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8z"/></svg>
+          </div>
+          <h3 style="font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-dark);margin-bottom:5px;">Advanced</h3>
+          <p style="font-size:12px;color:var(--text-mid);">Implants & Laser</p>
+        </div>
+
+      </div>
+      <div style="text-align:center;margin-top:40px;">
+        <button class="btn-primary" onclick="showPage('services')" style="padding:14px 36px;font-size:15px;">View All 38 Services →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section style="padding:70px 20px;background:var(--teal-xpale);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="section-tag">Why Choose Us</div>
+        <h2 class="section-title">Why Patients Trust SmileCare</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;">
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>🏅</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Experienced Doctors</h3><p style="font-size:13px;color:var(--text-mid);">15+ years of dental expertise</p></div>
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>🔬</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Advanced Technology</h3><p style="font-size:13px;color:var(--text-mid);">Digital X-Ray, Laser & more</p></div>
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>💙</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Painless Treatment</h3><p style="font-size:13px;color:var(--text-mid);">Gentle, anxiety-free care</p></div>
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>💰</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Affordable Pricing</h3><p style="font-size:13px;color:var(--text-mid);">Transparent, no hidden costs</p></div>
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>🧼</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Hygienic Clinic</h3><p style="font-size:13px;color:var(--text-mid);">Strict sterilization protocols</p></div>
+        <div class="why-card"><div class="why-icon" style="width:54px;height:54px;background:var(--teal-pale);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;"><span>⭐</span></div><h3 style="font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">5-Star Reviews</h3><p style="font-size:13px;color:var(--text-mid);">Trusted by 5000+ patients</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section style="padding:70px 20px;background:#fff;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="section-tag">Testimonials</div>
+        <h2 class="section-title">What Our Patients Say</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <div class="testi-card"><div class="stars">★★★★★</div><p style="color:var(--text-mid);font-size:15px;line-height:1.7;margin:14px 0 18px;">"Excellent service and very gentle treatment. The staff is incredibly friendly and the clinic is spotless. SmileCare is simply the best dental clinic!"</p><div style="display:flex;align-items:center;gap:12px;"><div style="width:44px;height:44px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--teal-dark);font-weight:800;font-size:16px;">R</div><div><div style="font-weight:700;font-size:14px;">Riya Sharma</div><div style="font-size:12px;color:var(--text-mid);">Root Canal Patient</div></div></div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p style="color:var(--text-mid);font-size:15px;line-height:1.7;margin:14px 0 18px;">"Got my smile designed here and the results are absolutely amazing! The doctor is highly skilled and the whole process was smooth and completely painless."</p><div style="display:flex;align-items:center;gap:12px;"><div style="width:44px;height:44px;background:#fce8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#c05080;font-weight:800;font-size:16px;">P</div><div><div style="font-weight:700;font-size:14px;">Priya Desai</div><div style="font-size:12px;color:var(--text-mid);">Smile Design Patient</div></div></div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p style="color:var(--text-mid);font-size:15px;line-height:1.7;margin:14px 0 18px;">"My kids love coming here. The pediatric dental care is exceptional — the staff makes children feel at ease. Best family dental clinic in the city!"</p><div style="display:flex;align-items:center;gap:12px;"><div style="width:44px;height:44px;background:#e8f5e8;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2e7d32;font-weight:800;font-size:16px;">A</div><div><div style="font-weight:700;font-size:14px;">Anita Patil</div><div style="font-size:12px;color:var(--text-mid);">Pediatric Care</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section style="background:linear-gradient(135deg,#0a4f4f,#0d6e6e);padding:60px 20px;text-align:center;">
+    <div style="max-width:600px;margin:0 auto;">
+      <h2 style="color:#fff;font-size:34px;margin-bottom:14px;">Ready for a Healthier Smile?</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:16px;margin-bottom:28px;">Book your appointment today and take the first step towards better oral health.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="showPage('contact')" style="background:#fff;color:var(--teal-dark);padding:14px 32px;font-size:15px;">Book Appointment Now</button>
+        <a href="tel:+919876543210" style="border:2px solid rgba(255,255,255,0.6);color:#fff;font-weight:700;padding:14px 32px;border-radius:50px;font-size:15px;text-decoration:none;">📞 Call Us Now</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="page-about" class="page">
+  <div style="background:linear-gradient(135deg,#0d6e6e,#12a0a0);padding:60px 20px;text-align:center;">
+    <div class="section-tag" style="background:rgba(255,255,255,0.2);color:#fff;">About Us</div>
+    <h1 style="color:#fff;font-size:42px;margin-top:10px;">About SmileCare Dental</h1>
+    <p style="color:rgba(255,255,255,0.8);margin-top:10px;font-size:16px;">Caring for your smile since 2010</p>
+  </div>
+  <section style="padding:70px 20px;background:#fff;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+      <div>
+        <div class="section-tag">Our Story</div>
+        <h2 class="section-title" style="margin-bottom:20px;">Dedicated to Your Dental Health</h2>
+        <p style="color:var(--text-mid);line-height:1.8;margin-bottom:16px;font-size:15px;">At SmileCare Dental Clinic, we believe every patient deserves a healthy, beautiful smile. Our experienced team of dental professionals is dedicated to providing compassionate, high-quality dental care in a comfortable and modern environment.</p>
+        <p style="color:var(--text-mid);line-height:1.8;margin-bottom:24px;font-size:15px;">We use the latest dental technology and techniques to ensure the best outcomes for our patients — from preventive care to complex restorations and cosmetic treatments.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div style="background:var(--teal-xpale);border-radius:14px;padding:18px;text-align:center;"><div style="font-size:30px;margin-bottom:6px;">🏆</div><div style="font-weight:700;color:var(--teal-dark);font-size:14px;">Award Winning</div><div style="font-size:12px;color:var(--text-mid);margin-top:3px;">Best Clinic 2023</div></div>
+          <div style="background:var(--teal-xpale);border-radius:14px;padding:18px;text-align:center;"><div style="font-size:30px;margin-bottom:6px;">🔬</div><div style="font-weight:700;color:var(--teal-dark);font-size:14px;">Modern Tech</div><div style="font-size:12px;color:var(--text-mid);margin-top:3px;">Digital X-Ray & Laser</div></div>
+          <div style="background:var(--teal-xpale);border-radius:14px;padding:18px;text-align:center;"><div style="font-size:30px;margin-bottom:6px;">❤️</div><div style="font-weight:700;color:var(--teal-dark);font-size:14px;">Gentle Care</div><div style="font-size:12px;color:var(--text-mid);margin-top:3px;">Painless Procedures</div></div>
+          <div style="background:var(--teal-xpale);border-radius:14px;padding:18px;text-align:center;"><div style="font-size:30px;margin-bottom:6px;">🧑‍⚕️</div><div style="font-weight:700;color:var(--teal-dark);font-size:14px;">Expert Team</div><div style="font-size:12px;color:var(--text-mid);margin-top:3px;">Qualified Specialists</div></div>
+        </div>
+      </div>
+      <div style="background:var(--teal-xpale);border-radius:24px;padding:36px;">
+        <h3 style="font-size:22px;color:var(--teal-dark);margin-bottom:18px;">Our Mission & Values</h3>
+        <p style="color:var(--text-mid);font-size:15px;line-height:1.8;margin-bottom:20px;">To provide exceptional dental care that transforms lives through healthy, confident smiles — using advanced technology with a personalized, patient-first approach.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:28px;height:28px;background:var(--teal-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;margin-top:2px;">✓</div><span style="font-size:14px;color:var(--text-mid);">Personalized treatment plans for every patient</span></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:28px;height:28px;background:var(--teal-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;margin-top:2px;">✓</div><span style="font-size:14px;color:var(--text-mid);">Sterilized instruments and hygienic environment</span></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:28px;height:28px;background:var(--teal-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;margin-top:2px;">✓</div><span style="font-size:14px;color:var(--text-mid);">Transparent pricing with no hidden charges</span></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:28px;height:28px;background:var(--teal-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;margin-top:2px;">✓</div><span style="font-size:14px;color:var(--text-mid);">Emergency dental care available 24/7</span></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;"><div style="width:28px;height:28px;background:var(--teal-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;margin-top:2px;">✓</div><span style="font-size:14px;color:var(--text-mid);">Comfortable, anxiety-free dental experience</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Team -->
+  <section style="padding:60px 20px;background:var(--teal-xpale);">
+    <div style="max-width:1100px;margin:0 auto;text-align:center;">
+      <div class="section-tag">Our Team</div>
+      <h2 class="section-title" style="margin-bottom:40px;">Meet Our Dental Experts</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;">
+        <div style="background:#fff;border-radius:20px;padding:28px;text-align:center;border:1.5px solid #e0f0f0;">
+          <div style="width:80px;height:80px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;">👩‍⚕️</div>
+          <h3 style="font-size:17px;font-family:'Nunito',sans-serif;font-weight:700;">Dr. Priya More</h3>
+          <div style="font-size:13px;color:var(--teal-dark);font-weight:600;margin:4px 0;">BDS, MDS — Orthodontist</div>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:8px;">12 years experience in orthodontics and smile design</p>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:28px;text-align:center;border:1.5px solid #e0f0f0;">
+          <div style="width:80px;height:80px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;">👨‍⚕️</div>
+          <h3 style="font-size:17px;font-family:'Nunito',sans-serif;font-weight:700;">Dr. Rahul Sharma</h3>
+          <div style="font-size:13px;color:var(--teal-dark);font-weight:600;margin:4px 0;">BDS, MDS — Oral Surgeon</div>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:8px;">10 years expertise in oral surgery and implantology</p>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:28px;text-align:center;border:1.5px solid #e0f0f0;">
+          <div style="width:80px;height:80px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;">👩‍⚕️</div>
+          <h3 style="font-size:17px;font-family:'Nunito',sans-serif;font-weight:700;">Dr. Sneha Patil</h3>
+          <div style="font-size:13px;color:var(--teal-dark);font-weight:600;margin:4px 0;">BDS — Pediatric Dentist</div>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:8px;">8 years of gentle pediatric dental care</p>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:28px;text-align:center;border:1.5px solid #e0f0f0;">
+          <div style="width:80px;height:80px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;">👨‍⚕️</div>
+          <h3 style="font-size:17px;font-family:'Nunito',sans-serif;font-weight:700;">Dr. Amit Joshi</h3>
+          <div style="font-size:13px;color:var(--teal-dark);font-weight:600;margin:4px 0;">BDS, MDS — Prosthodontist</div>
+          <p style="font-size:13px;color:var(--text-mid);margin-top:8px;">15 years in restorative and cosmetic dentistry</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== SERVICES PAGE ==================== -->
+<div id="page-services" class="page">
+  <div style="background:linear-gradient(135deg,#0d6e6e,#12a0a0);padding:60px 20px;text-align:center;">
+    <div class="section-tag" style="background:rgba(255,255,255,0.2);color:#fff;">Our Services</div>
+    <h1 style="color:#fff;font-size:42px;margin-top:10px;">Comprehensive Dental Services</h1>
+    <p style="color:rgba(255,255,255,0.8);margin-top:10px;font-size:16px;">38+ services across 8 specialities — all under one roof</p>
+  </div>
+  <section style="padding:60px 20px;background:#fff;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div id="svc-tabs" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:40px;">
+        <button class="tab-btn active" onclick="filterSvc('all',this)">All Services</button>
+        <button class="tab-btn" onclick="filterSvc('diag',this)">🔎 Diagnosis</button>
+        <button class="tab-btn" onclick="filterSvc('prev',this)">🛡️ Preventive</button>
+        <button class="tab-btn" onclick="filterSvc('rest',this)">🦷 Restorative</button>
+        <button class="tab-btn" onclick="filterSvc('surg',this)">🏥 Surgical</button>
+        <button class="tab-btn" onclick="filterSvc('cosm',this)">✨ Cosmetic</button>
+        <button class="tab-btn" onclick="filterSvc('orth',this)">🔩 Orthodontics</button>
+        <button class="tab-btn" onclick="filterSvc('adv',this)">⚡ Advanced</button>
+        <button class="tab-btn" onclick="filterSvc('pedi',this)">🧒 Pediatric</button>
+      </div>
+      <div id="svc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+        <!-- Diagnosis -->
+        <div class="service-card" data-svc="diag"><div class="icon-wrap" style="background:#e0f5f5;"><span>🔎</span></div><span style="font-size:11px;background:var(--teal-pale);color:var(--teal-dark);padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Diagnosis</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dental Check-up</h3><p style="font-size:13px;color:var(--text-mid);">Comprehensive oral examination to assess overall dental health.</p></div>
+        <div class="service-card" data-svc="diag"><div class="icon-wrap" style="background:#e0f5f5;"><span>📷</span></div><span style="font-size:11px;background:var(--teal-pale);color:var(--teal-dark);padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Diagnosis</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Digital X-Ray</h3><p style="font-size:13px;color:var(--text-mid);">Advanced imaging to detect hidden dental issues with minimal radiation.</p></div>
+        <div class="service-card" data-svc="diag"><div class="icon-wrap" style="background:#e0f5f5;"><span>🔬</span></div><span style="font-size:11px;background:var(--teal-pale);color:var(--teal-dark);padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Diagnosis</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Intraoral Camera Exam</h3><p style="font-size:13px;color:var(--text-mid);">Detailed visual inspection using high-resolution intraoral images.</p></div>
+        <div class="service-card" data-svc="diag"><div class="icon-wrap" style="background:#e0f5f5;"><span>🫀</span></div><span style="font-size:11px;background:var(--teal-pale);color:var(--teal-dark);padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Diagnosis</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Gum Health Assessment</h3><p style="font-size:13px;color:var(--text-mid);">Evaluation of gum condition and periodontal health.</p></div>
+        <div class="service-card" data-svc="diag"><div class="icon-wrap" style="background:#e0f5f5;"><span>🧬</span></div><span style="font-size:11px;background:var(--teal-pale);color:var(--teal-dark);padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Diagnosis</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Oral Cancer Screening</h3><p style="font-size:13px;color:var(--text-mid);">Early detection of abnormal tissue changes for timely treatment.</p></div>
+        <!-- Preventive -->
+        <div class="service-card" data-svc="prev"><div class="icon-wrap" style="background:#e8f5e8;"><span>🪥</span></div><span style="font-size:11px;background:#e8f5e8;color:#2e7d32;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Preventive</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Teeth Cleaning</h3><p style="font-size:13px;color:var(--text-mid);">Scaling & polishing to remove plaque, tartar, and stains.</p></div>
+        <div class="service-card" data-svc="prev"><div class="icon-wrap" style="background:#e8f5e8;"><span>💊</span></div><span style="font-size:11px;background:#e8f5e8;color:#2e7d32;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Preventive</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Fluoride Treatment</h3><p style="font-size:13px;color:var(--text-mid);">Strengthens enamel and prevents cavities effectively.</p></div>
+        <div class="service-card" data-svc="prev"><div class="icon-wrap" style="background:#e8f5e8;"><span>🛡️</span></div><span style="font-size:11px;background:#e8f5e8;color:#2e7d32;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Preventive</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dental Sealants</h3><p style="font-size:13px;color:var(--text-mid);">Protective coating applied to prevent tooth decay.</p></div>
+        <div class="service-card" data-svc="prev"><div class="icon-wrap" style="background:#e8f5e8;"><span>📅</span></div><span style="font-size:11px;background:#e8f5e8;color:#2e7d32;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Preventive</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Regular Checkups</h3><p style="font-size:13px;color:var(--text-mid);">Routine visits for maintaining long-term oral health.</p></div>
+        <div class="service-card" data-svc="prev"><div class="icon-wrap" style="background:#e8f5e8;"><span>📚</span></div><span style="font-size:11px;background:#e8f5e8;color:#2e7d32;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Preventive</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Oral Hygiene Education</h3><p style="font-size:13px;color:var(--text-mid);">Expert guidance on proper brushing and flossing techniques.</p></div>
+        <!-- Restorative -->
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>🦷</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Tooth Filling</h3><p style="font-size:13px;color:var(--text-mid);">Restores decayed or damaged teeth to their original shape.</p></div>
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>💉</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Root Canal Treatment</h3><p style="font-size:13px;color:var(--text-mid);">Removes infection and saves natural teeth painlessly.</p></div>
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>👑</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dental Crowns</h3><p style="font-size:13px;color:var(--text-mid);">Protective caps for damaged or weakened teeth.</p></div>
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>🌉</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dental Bridges</h3><p style="font-size:13px;color:var(--text-mid);">Fixed replacement solution for one or more missing teeth.</p></div>
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>😬</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dentures</h3><p style="font-size:13px;color:var(--text-mid);">Removable replacement for missing teeth — natural and comfortable.</p></div>
+        <div class="service-card" data-svc="rest"><div class="icon-wrap" style="background:#fef3e0;"><span>🔧</span></div><span style="font-size:11px;background:#fef3e0;color:#b06000;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Restorative</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Tooth Bonding</h3><p style="font-size:13px;color:var(--text-mid);">Fixes minor chips, cracks, and gaps with composite resin.</p></div>
+        <!-- Surgical -->
+        <div class="service-card" data-svc="surg"><div class="icon-wrap" style="background:#fde8e8;"><span>🦷</span></div><span style="font-size:11px;background:#fde8e8;color:#b71c1c;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Surgical</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Tooth Extraction</h3><p style="font-size:13px;color:var(--text-mid);">Painless removal of severely damaged or infected teeth.</p></div>
+        <div class="service-card" data-svc="surg"><div class="icon-wrap" style="background:#fde8e8;"><span>🧠</span></div><span style="font-size:11px;background:#fde8e8;color:#b71c1c;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Surgical</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Wisdom Tooth Removal</h3><p style="font-size:13px;color:var(--text-mid);">Expert extraction of impacted wisdom teeth.</p></div>
+        <div class="service-card" data-svc="surg"><div class="icon-wrap" style="background:#fde8e8;"><span>🏥</span></div><span style="font-size:11px;background:#fde8e8;color:#b71c1c;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Surgical</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Minor Oral Surgery</h3><p style="font-size:13px;color:var(--text-mid);">Small surgical procedures for various oral issues.</p></div>
+        <div class="service-card" data-svc="surg"><div class="icon-wrap" style="background:#fde8e8;"><span>🩺</span></div><span style="font-size:11px;background:#fde8e8;color:#b71c1c;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Surgical</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Gum Surgery</h3><p style="font-size:13px;color:var(--text-mid);">Effective surgical treatment for advanced gum disease.</p></div>
+        <!-- Cosmetic -->
+        <div class="service-card" data-svc="cosm"><div class="icon-wrap" style="background:#fce8f0;"><span>✨</span></div><span style="font-size:11px;background:#fce8f0;color:#ad1457;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Cosmetic</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Teeth Whitening</h3><p style="font-size:13px;color:var(--text-mid);">Brightens and enhances your natural smile professionally.</p></div>
+        <div class="service-card" data-svc="cosm"><div class="icon-wrap" style="background:#fce8f0;"><span>💎</span></div><span style="font-size:11px;background:#fce8f0;color:#ad1457;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Cosmetic</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Veneers</h3><p style="font-size:13px;color:var(--text-mid);">Improves shape, size, and color of teeth with porcelain shells.</p></div>
+        <div class="service-card" data-svc="cosm"><div class="icon-wrap" style="background:#fce8f0;"><span>😁</span></div><span style="font-size:11px;background:#fce8f0;color:#ad1457;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Cosmetic</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Smile Designing</h3><p style="font-size:13px;color:var(--text-mid);">Customized aesthetic smile solutions for your perfect look.</p></div>
+        <div class="service-card" data-svc="cosm"><div class="icon-wrap" style="background:#fce8f0;"><span>✏️</span></div><span style="font-size:11px;background:#fce8f0;color:#ad1457;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Cosmetic</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Tooth Contouring</h3><p style="font-size:13px;color:var(--text-mid);">Reshaping teeth for a better appearance and bite.</p></div>
+        <div class="service-card" data-svc="cosm"><div class="icon-wrap" style="background:#fce8f0;"><span>🔗</span></div><span style="font-size:11px;background:#fce8f0;color:#ad1457;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Cosmetic</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Gap Closure</h3><p style="font-size:13px;color:var(--text-mid);">Fixes unwanted spaces between teeth aesthetically.</p></div>
+        <!-- Orthodontics -->
+        <div class="service-card" data-svc="orth"><div class="icon-wrap" style="background:#ede8fc;"><span>🔩</span></div><span style="font-size:11px;background:#ede8fc;color:#5e35b1;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Orthodontics</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Metal Braces</h3><p style="font-size:13px;color:var(--text-mid);">Traditional and reliable teeth alignment solution.</p></div>
+        <div class="service-card" data-svc="orth"><div class="icon-wrap" style="background:#ede8fc;"><span>🪨</span></div><span style="font-size:11px;background:#ede8fc;color:#5e35b1;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Orthodontics</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Ceramic Braces</h3><p style="font-size:13px;color:var(--text-mid);">Less visible and aesthetic braces option for alignment.</p></div>
+        <div class="service-card" data-svc="orth"><div class="icon-wrap" style="background:#ede8fc;"><span>🫙</span></div><span style="font-size:11px;background:#ede8fc;color:#5e35b1;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Orthodontics</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Clear Aligners</h3><p style="font-size:13px;color:var(--text-mid);">Invisible teeth straightening trays — modern and comfortable.</p></div>
+        <div class="service-card" data-svc="orth"><div class="icon-wrap" style="background:#ede8fc;"><span>🛡️</span></div><span style="font-size:11px;background:#ede8fc;color:#5e35b1;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Orthodontics</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Retainers</h3><p style="font-size:13px;color:var(--text-mid);">Maintain teeth position after orthodontic treatment.</p></div>
+        <!-- Advanced -->
+        <div class="service-card" data-svc="adv"><div class="icon-wrap" style="background:#e8eefa;"><span>🦴</span></div><span style="font-size:11px;background:#e8eefa;color:#1565c0;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Advanced</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Dental Implants</h3><p style="font-size:13px;color:var(--text-mid);">Permanent, natural-looking replacement for missing teeth.</p></div>
+        <div class="service-card" data-svc="adv"><div class="icon-wrap" style="background:#e8eefa;"><span>🔄</span></div><span style="font-size:11px;background:#e8eefa;color:#1565c0;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Advanced</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Full Mouth Rehabilitation</h3><p style="font-size:13px;color:var(--text-mid);">Complete dental restoration for a healthy, functional smile.</p></div>
+        <div class="service-card" data-svc="adv"><div class="icon-wrap" style="background:#e8eefa;"><span>⚡</span></div><span style="font-size:11px;background:#e8eefa;color:#1565c0;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Advanced</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Laser Dentistry</h3><p style="font-size:13px;color:var(--text-mid);">Advanced, painless procedures using modern laser technology.</p></div>
+        <div class="service-card" data-svc="adv"><div class="icon-wrap" style="background:#e8eefa;"><span>🦿</span></div><span style="font-size:11px;background:#e8eefa;color:#1565c0;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Advanced</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">TMJ Treatment</h3><p style="font-size:13px;color:var(--text-mid);">Specialized treatment for jaw joint and muscle problems.</p></div>
+        <!-- Pediatric -->
+        <div class="service-card" data-svc="pedi"><div class="icon-wrap" style="background:#fff3e0;"><span>🧒</span></div><span style="font-size:11px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Pediatric</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Kids Dental Check-up</h3><p style="font-size:13px;color:var(--text-mid);">Routine dental care and monitoring for children.</p></div>
+        <div class="service-card" data-svc="pedi"><div class="icon-wrap" style="background:#fff3e0;"><span>🍬</span></div><span style="font-size:11px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Pediatric</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Cavity Treatment for Kids</h3><p style="font-size:13px;color:var(--text-mid);">Gentle and effective decay treatment for young patients.</p></div>
+        <div class="service-card" data-svc="pedi"><div class="icon-wrap" style="background:#fff3e0;"><span>💊</span></div><span style="font-size:11px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Pediatric</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Fluoride for Kids</h3><p style="font-size:13px;color:var(--text-mid);">Extra protection and cavity prevention for young teeth.</p></div>
+        <div class="service-card" data-svc="pedi"><div class="icon-wrap" style="background:#fff3e0;"><span>👍</span></div><span style="font-size:11px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Pediatric</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Habit Correction</h3><p style="font-size:13px;color:var(--text-mid);">Thumb sucking and oral habits management for children.</p></div>
+        <div class="service-card" data-svc="pedi"><div class="icon-wrap" style="background:#fff3e0;"><span>🌱</span></div><span style="font-size:11px;background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:50px;font-weight:700;display:inline-block;margin-bottom:10px;">Pediatric</span><h3 style="font-size:16px;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:6px;">Preventive Pediatric Care</h3><p style="font-size:13px;color:var(--text-mid);">Sealants and early protection strategies for kids.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== GALLERY PAGE ==================== -->
+<div id="page-gallery" class="page">
+  <div style="background:linear-gradient(135deg,#0d6e6e,#12a0a0);padding:60px 20px;text-align:center;">
+    <div class="section-tag" style="background:rgba(255,255,255,0.2);color:#fff;">Gallery</div>
+    <h1 style="color:#fff;font-size:42px;margin-top:10px;">Our Clinic Gallery</h1>
+    <p style="color:rgba(255,255,255,0.8);margin-top:10px;font-size:16px;">A glimpse of our modern facility, expert team & happy patient smiles</p>
+  </div>
+  <section style="padding:60px 20px;background:#fff;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <!-- Filter Tabs -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px;">
+        <button class="tab-btn active" onclick="filterGallery('all',this)">All Photos</button>
+        <button class="tab-btn" onclick="filterGallery('clinic',this)">🏥 Clinic</button>
+        <button class="tab-btn" onclick="filterGallery('team',this)">🧑‍⚕️ Our Team</button>
+        <button class="tab-btn" onclick="filterGallery('equipment',this)">🔬 Equipment</button>
+        <button class="tab-btn" onclick="filterGallery('smile',this)">😁 Smile Results</button>
+      </div>
+      <!-- Gallery Grid -->
+      <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;">
+
+        <!-- Clinic Photos -->
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('🏥', 'Reception Area', 'Our welcoming reception area')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#b2dfdf,#80cbc4);">🏥</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Reception Area</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('🛋️', 'Waiting Lounge', 'Comfortable waiting area for patients')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#a5d6a7,#80cbc4);">🛋️</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Waiting Lounge</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('🦷', 'Treatment Room 1', 'Modern dental treatment room')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#80cbc4,#4db6ac);">🦷</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Treatment Room 1</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('🚿', 'Sterilization Room', 'Our sterilization and hygiene room')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#b3e5fc,#81d4fa);">🚿</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Sterilization Room</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('🏠', 'Clinic Exterior', 'Outside view of our clinic')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#c8e6c9,#a5d6a7);">🏠</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Clinic Exterior</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="clinic" onclick="openLightbox('💻', 'Consultation Room', 'Digital consultation with patients')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#b2ebf2,#80deea);">💻</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Consultation Room</span></div>
+        </div>
+
+        <!-- Team Photos -->
+        <div class="gallery-item" data-gcat="team" onclick="openLightbox('👩‍⚕️', 'Dr. Priya More', 'Chief Orthodontist & Smile Designer')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#f8bbd0,#f48fb1);">👩‍⚕️</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Dr. Priya More</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="team" onclick="openLightbox('👨‍⚕️', 'Dr. Rahul Sharma', 'Oral Surgeon & Implantologist')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#bbdefb,#90caf9);">👨‍⚕️</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Dr. Rahul Sharma</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="team" onclick="openLightbox('👩‍⚕️', 'Dr. Sneha Patil', 'Pediatric Dental Specialist')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#ffe0b2,#ffcc80);">👩‍⚕️</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Dr. Sneha Patil</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="team" onclick="openLightbox('🤝', 'Team Meeting', 'Our dental team in action')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#d1c4e9,#b39ddb);">🤝</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Our Team Meeting</span></div>
+        </div>
+
+        <!-- Equipment -->
+        <div class="gallery-item" data-gcat="equipment" onclick="openLightbox('📷', 'Digital X-Ray Machine', 'State-of-the-art digital X-ray')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#cfd8dc,#b0bec5);">📷</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Digital X-Ray</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="equipment" onclick="openLightbox('🔬', 'Intraoral Camera', 'High-resolution intraoral camera')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#b2dfdb,#80cbc4);">🔬</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Intraoral Camera</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="equipment" onclick="openLightbox('⚡', 'Laser Unit', 'Modern dental laser system')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#fff9c4,#fff176);">⚡</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Laser Unit</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="equipment" onclick="openLightbox('🦷', 'Dental Chair', 'Advanced ergonomic dental chairs')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);">🦷</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Dental Chair</span></div>
+        </div>
+
+        <!-- Smile Results -->
+        <div class="gallery-item" data-gcat="smile" onclick="openLightbox('😁', 'Smile Makeover', 'Before & after smile transformation')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#f8bbd0,#f48fb1);">😁</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Smile Makeover</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="smile" onclick="openLightbox('✨', 'Teeth Whitening Result', 'Dramatic whitening transformation')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#fffde7,#fff59d);">✨</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Whitening Result</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="smile" onclick="openLightbox('💎', 'Veneer Result', 'Beautiful veneer transformation')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb);">💎</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Veneer Result</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="smile" onclick="openLightbox('🔩', 'Braces Result', 'Perfect alignment after braces')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);">🔩</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Braces Result</span></div>
+        </div>
+        <div class="gallery-item" data-gcat="smile" onclick="openLightbox('🦴', 'Implant Result', 'Natural-looking dental implants')">
+          <div class="gallery-placeholder" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">🦴</div>
+          <div class="gallery-overlay"><span style="color:#fff;font-weight:700;font-size:14px;">Implant Result</span></div>
+        </div>
+
+      </div>
+
+      <!-- CTA in Gallery -->
+      <div style="text-align:center;margin-top:48px;background:var(--teal-xpale);border-radius:20px;padding:40px 20px;">
+        <h3 style="font-size:26px;color:var(--teal-dark);margin-bottom:10px;">Want to See Your Own Transformation?</h3>
+        <p style="color:var(--text-mid);margin-bottom:22px;">Book a consultation and let our experts create your perfect smile.</p>
+        <button class="btn-primary" onclick="showPage('contact')" style="padding:14px 36px;font-size:15px;">Book Free Consultation</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div id="page-contact" class="page">
+  <div style="background:linear-gradient(135deg,#0d6e6e,#12a0a0);padding:60px 20px;text-align:center;">
+    <div class="section-tag" style="background:rgba(255,255,255,0.2);color:#fff;">Contact Us</div>
+    <h1 style="color:#fff;font-size:42px;margin-top:10px;">Book Your Appointment</h1>
+    <p style="color:rgba(255,255,255,0.8);margin-top:10px;font-size:16px;">Fill in the form and we'll confirm your appointment shortly</p>
+  </div>
+  <section style="padding:70px 20px;background:#fff;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:50px;">
+      <!-- Form -->
+      <div>
+        <h2 style="font-size:26px;color:var(--teal-dark);margin-bottom:24px;">Request an Appointment</h2>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Full Name *</label><input type="text" placeholder="Your full name" style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"/></div>
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Phone Number *</label><input type="tel" placeholder="+91 XXXXX XXXXX" style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"/></div>
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Email Address</label><input type="email" placeholder="your@email.com" style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;transition:border 0.2s;" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"/></div>
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Service Required</label><select style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;color:var(--text-mid);" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"><option>Select a service...</option><option>Dental Check-up</option><option>Teeth Cleaning</option><option>Root Canal Treatment</option><option>Dental Implants</option><option>Teeth Whitening</option><option>Braces / Clear Aligners</option><option>Smile Designing</option><option>Pediatric Dentistry</option><option>Other</option></select></div>
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Preferred Date</label><input type="date" style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"/></div>
+          <div><label style="font-size:13px;font-weight:700;color:var(--text-mid);display:block;margin-bottom:6px;">Message</label><textarea rows="4" placeholder="Any specific concerns or questions..." style="width:100%;padding:12px 16px;border:1.5px solid #d4ebeb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;resize:none;" onfocus="this.style.borderColor='#0d6e6e'" onblur="this.style.borderColor='#d4ebeb'"></textarea></div>
+          <button class="btn-primary" style="padding:14px;font-size:15px;width:100%;">Confirm Appointment →</button>
+        </div>
+      </div>
+      <!-- Info -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:var(--teal-dark);border-radius:20px;padding:30px;color:#fff;">
+          <h3 style="font-size:20px;margin-bottom:20px;color:#fff;">Contact Information</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;font-size:14px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📍</div><div><div style="font-weight:700;margin-bottom:3px;">Address</div><div style="color:rgba(255,255,255,0.75);line-height:1.6;">123, Dental Avenue, Near City Hospital<br/>Your City - 400001, Maharashtra</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📞</div><div><div style="font-weight:700;margin-bottom:3px;">Phone</div><div style="color:rgba(255,255,255,0.75);">+91 98765 43210<br/>+91 87654 32109</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">✉️</div><div><div style="font-weight:700;margin-bottom:3px;">Email</div><div style="color:rgba(255,255,255,0.75);">info@smilecaredental.com</div></div></div>
+          </div>
+        </div>
+        <div style="background:var(--teal-xpale);border-radius:20px;padding:26px;">
+          <h3 style="font-size:18px;color:var(--teal-dark);margin-bottom:16px;">Clinic Hours</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;">
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #c8e8e8;"><span style="color:var(--text-mid);">Monday – Friday</span><span style="font-weight:700;color:var(--teal-dark);">9:00 AM – 7:00 PM</span></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #c8e8e8;"><span style="color:var(--text-mid);">Saturday</span><span style="font-weight:700;color:var(--teal-dark);">9:00 AM – 5:00 PM</span></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="color:var(--text-mid);">Sunday</span><span style="font-weight:700;color:#e53935;">Emergency Only</span></div>
+          </div>
+        </div>
+        <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:16px;padding:20px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:36px;">💬</div>
+          <div><div style="font-weight:800;color:#2e7d32;font-size:15px;">WhatsApp Us</div><div style="font-size:13px;color:#388e3c;margin:3px 0;">Quick appointment booking on WhatsApp</div><div style="font-weight:700;color:#2e7d32;font-size:14px;">+91 98765 43210</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <div style="position:relative;text-align:center;" onclick="event.stopPropagation()">
+    <div id="lb-emoji" style="font-size:120px;margin-bottom:16px;display:block;"></div>
+    <h3 id="lb-title" style="color:#fff;font-size:22px;margin-bottom:6px;font-family:'Playfair Display',serif;"></h3>
+    <p id="lb-desc" style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:20px;"></p>
+    <button onclick="closeLightbox()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:10px 24px;border-radius:50px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;">✕ Close</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#0d3535;padding:50px 20px 20px;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:36px;">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="font-size:24px;">🦷</div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;">SmileCare Dental</div></div>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;line-height:1.7;">Your trusted dental clinic for comprehensive oral healthcare. Serving the community with compassion and expertise since 2010.</p>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Quick Links</h4>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li><a href="#" onclick="showPage('home')" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Home</a></li>
+        <li><a href="#" onclick="showPage('about')" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">About Us</a></li>
+        <li><a href="#" onclick="showPage('services')" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Services</a></li>
+        <li><a href="#" onclick="showPage('gallery')" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Gallery</a></li>
+        <li><a href="#" onclick="showPage('contact')" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Book Appointment</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Popular Services</h4>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Dental Implants</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Teeth Whitening</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Clear Aligners</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Root Canal Treatment</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Smile Designing</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Pediatric Dentistry</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Contact</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);">
+        <div>📞 +91 98765 43210</div>
+        <div>✉️ info@smilecaredental.com</div>
+        <div>📍 123 Dental Avenue, Maharashtra</div>
+        <div>⏰ Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:18px;text-align:center;color:rgba(255,255,255,0.7);font-size:13px;">
+    © 2025 SmileCare Dental Clinic. All rights reserved. | Designed with ❤️ for your smile
+  </div>
+</footer>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+page);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleMobile() {
+  const m = document.getElementById('mobileMenu');
+  m.classList.toggle('open');
+}
+
+function filterSvc(cat, btn) {
+  document.querySelectorAll('[data-svc]').forEach(c => {
+    c.style.display = (cat==='all' || c.dataset.svc===cat) ? '' : 'none';
+  });
+  document.querySelectorAll('#svc-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterGallery(cat, btn) {
+  document.querySelectorAll('[data-gcat]').forEach(c => {
+    c.style.display = (cat==='all' || c.dataset.gcat===cat) ? '' : 'none';
+  });
+  document.querySelectorAll('#page-gallery .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function openLightbox(emoji, title, desc) {
+  document.getElementById('lb-emoji').textContent = emoji;
+  document.getElementById('lb-title').textContent = title;
+  document.getElementById('lb-desc').textContent = desc;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+// Counter animation
+function animateCounter(id, target, suffix, duration) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let start = 0;
+  const step = Math.ceil(target / (duration / 16));
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = start + suffix;
+  }, 16);
+}
+
+// Run counters when home page is visible
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter('cnt-patients', 5000, '+', 1800);
+      animateCounter('cnt-years', 15, '+', 1200);
+      animateCounter('cnt-services', 38, '+', 1000);
+      observer.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const heroSection = document.querySelector('#page-home section');
+if (heroSection) observer.observe(heroSection);
+</script>
+</body>
+</html>
