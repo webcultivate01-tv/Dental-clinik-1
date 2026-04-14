@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmileCare Dental Clinic</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  :root {
+    --teal-dark: #0d6e6e;
+    --teal-mid: #0e8585;
+    --teal-light: #12a0a0;
+    --teal-pale: #e0f5f5;
+    --teal-xpale: #f0fafa;
+    --accent: #f4a024;
+    --text-dark: #1a2e2e;
+    --text-mid: #3d5a5a;
+  }
+  * { scroll-behavior: smooth; box-sizing: border-box; }
+  body { font-family: 'Nunito', sans-serif; color: var(--text-dark); background: #fff; }
+  h1,h2,h3 { font-family: 'Playfair Display', serif; }
+
+  /* Navbar */
+  .navbar { background: #fff; box-shadow: 0 2px 20px rgba(13,110,110,0.10); position: sticky; top: 0; z-index: 100; }
+  .nav-link { color: var(--text-mid); font-weight: 600; font-size: 15px; padding: 6px 14px; border-radius: 8px; transition: all 0.2s; }
+  .nav-link:hover, .nav-link.active { color: var(--teal-dark); background: var(--teal-pale); }
+  .btn-primary { background: var(--teal-dark); color: #fff; font-weight: 700; padding: 10px 26px; border-radius: 50px; transition: all 0.2s; font-size: 14px; border: none; cursor: pointer; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,110,110,0.25); }
+  .btn-outline { border: 2px solid var(--teal-dark); color: var(--teal-dark); font-weight: 700; padding: 10px 26px; border-radius: 50px; transition: all 0.2s; font-size: 14px; background: transparent; cursor: pointer; }
+  .btn-outline:hover { background: var(--teal-dark); color: #fff; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #0a4f4f 0%, #0d6e6e 40%, #0f8080 70%, #12a0a0 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 280px; height: 280px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+
+  /* Section titles */
+  .section-tag { display: inline-block; background: var(--teal-pale); color: var(--teal-dark); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: 12px; }
+  .section-title { font-size: 34px; color: var(--text-dark); line-height: 1.25; }
+
+  /* Cards */
+  .service-card { background: #fff; border: 1.5px solid #e5f2f2; border-radius: 18px; padding: 24px; transition: all 0.3s; cursor: default; }
+  .service-card:hover { border-color: var(--teal-light); box-shadow: 0 12px 36px rgba(13,110,110,0.12); transform: translateY(-4px); }
+  .icon-wrap { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
+
+  /* Tab buttons */
+  .tab-btn { padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1.5px solid #d4ebeb; color: var(--text-mid); background: #fff; }
+  .tab-btn:hover { border-color: var(--teal-dark); color: var(--teal-dark); }
+  .tab-btn.active { background: var(--teal-dark); color: #fff; border-color: var(--teal-dark); }
+
+  /* Gallery */
+  .gallery-item { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; aspect-ratio: 4/3; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .gallery-item:hover img { transform: scale(1.07); }
+  .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,110,110,0.85) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 18px; }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+
+  /* Lightbox */
+  .lightbox { position: fixed; inset: 0; background: rgba(10,40,40,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .lightbox.open { display: flex; }
+  .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 16px; object-fit: contain; }
+
+  /* Stats */
+  .stat-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px 28px; text-align: center; }
+
+  /* Why Us */
+  .why-card { background: var(--teal-xpale); border: 1.5px solid #c8e8e8; border-radius: 18px; padding: 28px 22px; text-align: center; transition: all 0.3s; }
+  .why-card:hover { background: var(--teal-dark); color: #fff; transform: translateY(-4px); }
+  .why-card:hover p { color: rgba(255,255,255,0.8); }
+  .why-card:hover .why-icon { background: rgba(255,255,255,0.2); }
+
+  /* Testimonials */
+  .testi-card { background: #fff; border: 1.5px solid #e5f2f2; border-radius: 20px; padding: 28px; }
+  .stars { color: var(--accent); font-size: 16px; letter-spacing: 2px; }
+
+  /* Footer */
+  footer { background: #0d3535; color: #fff; }
+
+  /* Page navigation */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Mobile menu */
+  .mobile-menu { display: none; }
+  .mobile-menu.open { display: block; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--teal-xpale); }
+  ::-webkit-scrollbar-thumb { background: var(--teal-mid); border-radius: 10px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+
+  /* New Round Image animation */
+  .round-img-wrap { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 16px; border: 3px solid #e5f2f2; box-shadow: 0 8px 24px rgba(13,110,110,0.15); transition: all 0.4s ease; position: relative; }
+  .round-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+  .service-card-offer { text-align:center; cursor:default; background: #fff; padding: 25px 15px; border-radius: 20px; transition: all 0.4s ease; border: 1px solid transparent; }
+  .service-card-offer:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(13,110,110,0.1); border-color: #e5f2f2; }
+  .service-card-offer:hover .round-img-wrap { border-color: var(--teal-light); box-shadow: 0 12px 28px rgba(13,110,110,0.25); transform: scale(1.05); }
+  .service-card-offer:hover .round-img-wrap img { transform: scale(1.15); }
+
+  /* Topbar */
+  .topbar { background: var(--teal-dark); color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; padding: 7px 0; }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+    <div style="display:flex;gap:20px;align-items:center;">
+      <span>📞 +91 98765 43210</span>
+      <span>✉️ info@smilecaredental.com</span>
+    </div>
+    <span>⏰ Mon–Sat: 9:00 AM – 7:00 PM &nbsp;|&nbsp; Emergency: 24/7</span>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div style="max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:46px;height:46px;background:linear-gradient(135deg,#0d6e6e,#12a0a0);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;">🦷</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--teal-dark);line-height:1.1;">SmileCare Dental</div>
+        <div style="font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:0.5px;">Advanced Dental Care</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;align-items:center;" class="hidden md:flex">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="service.html" class="nav-link">Services</a>
+      <a href="gallery.html" class="nav-link active">Gallery</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="contact.html" class="btn-primary" style="text-decoration:none;">Book Appointment</a>
+      <button onclick="toggleMobile()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--teal-dark);" class="md:hidden">☰</button>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu" style="background:#fff;border-top:1px solid #e5f2f2;padding:12px 20px;">
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="service.html" class="nav-link">Services</a>
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== GALLERY PAGE ==================== -->
+<style>
+  .gallery-hero {
+    position:relative;
+    min-height:45vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .gallery-hero-bg {
+    position:absolute; inset:0;
+    background-image:url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600&q=80');
+    background-size:cover;
+    background-position:center;
+    z-index:0;
+  }
+  .gallery-hero-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to right, rgba(13,110,110,0.85), rgba(13,110,110,0.5));
+    z-index:1;
+  }
+  .gallery-hero-text {
+    position:relative; z-index:2; text-align:center; color:#fff; padding:0 20px;
+    animation:fadeUp 0.6s ease forwards;
+  }
+
+  .gallery-wrap { padding:80px 20px; background:var(--teal-xpale); }
+  .gallery-inner { max-width:1200px; margin:0 auto; }
+  
+  .gallery-tabs {
+    display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:40px;
+  }
+  .gallery-tab {
+    padding:10px 24px; border-radius:50px; font-weight:700; font-size:14px;
+    background:#fff; color:var(--text-mid); border:1.5px solid rgba(13,110,110,0.1);
+    cursor:pointer; transition:all 0.3s;
+  }
+  .gallery-tab.active {
+    background:var(--teal-dark); color:#fff; border-color:var(--teal-dark); box-shadow:0 6px 15px rgba(13,110,110,0.15);
+  }
+
+  .grid-masonry {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px;
+  }
+  .grid-item {
+    border-radius:20px; overflow:hidden; position:relative; aspect-ratio:4/3; cursor:pointer;
+    box-shadow:0 8px 30px rgba(13,110,110,0.08); background:#fff;
+  }
+  .grid-item img {
+    width:100%; height:100%; object-fit:cover; transition:transform 0.4s;
+  }
+  .grid-item:hover img { transform:scale(1.08); }
+  .grid-item-overlay {
+    position:absolute; inset:0; background:linear-gradient(to top, rgba(13,110,110,0.85) 0%, transparent 60%);
+    opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:24px;
+  }
+  .grid-item:hover .grid-item-overlay { opacity:1; }
+  .grid-item-text { color:#fff; font-weight:700; font-size:18px; transform:translateY(10px); transition:transform 0.3s; }
+  .grid-item:hover .grid-item-text { transform:translateY(0); }
+</style>
+
+<!-- Hero Section -->
+<section class="gallery-hero">
+  <div class="gallery-hero-bg"></div>
+  <div class="gallery-hero-overlay"></div>
+  <div class="gallery-hero-text">
+    <div style="font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;color:#7de8e8;">Our Infrastructure</div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:48px;font-weight:700;margin-bottom:10px;">Clinic Gallery</h1>
+    <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:10px auto 0;font-size:16px;">Take a tour around SmileCare dental clinic and see our advanced equipment and happy patients.</p>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-wrap">
+  <div class="gallery-inner">
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="filterGallery('all', this)">All</button>
+      <button class="gallery-tab" onclick="filterGallery('clinic', this)">Our Clinic</button>
+      <button class="gallery-tab" onclick="filterGallery('equipment', this)">Advanced Equipment</button>
+      <button class="gallery-tab" onclick="filterGallery('patients', this)">Happy Smiles</button>
+    </div>
+
+    <div class="grid-masonry" id="gallery-grid">
+      <!-- Clinic -->
+      <div class="grid-item reveal" data-cat="clinic" onclick="openLightbox('🏥', 'Clinic Reception', 'A welcoming environment for our patients.')">
+        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Clinic Interior">
+        <div class="grid-item-overlay"><div class="grid-item-text">Our Reception</div></div>
+      </div>
+      <div class="grid-item reveal reveal-delay-1" data-cat="clinic" onclick="openLightbox('🦷', 'Treatment Room', 'State-of-the-art treatment rooms.')">
+        <img src="https://images.unsplash.com/photo-1598256989800-fea5ce5146c1?w=800&q=80" alt="Treatment Room">
+        <div class="grid-item-overlay"><div class="grid-item-text">Modern Treatment Rooms</div></div>
+      </div>
+      <div class="grid-item reveal reveal-delay-2" data-cat="clinic" onclick="openLightbox('🏥', 'Clinic Exterior', 'Our clinic view.')">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Clinic Exterior">
+        <div class="grid-item-overlay"><div class="grid-item-text">World Class Infrastructure</div></div>
+      </div>
+      <!-- Equipment -->
+      <div class="grid-item reveal" data-cat="equipment" onclick="openLightbox('🔬', 'Diagnostic Tech', 'Digital X-ray and screening.')">
+        <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=800&q=80" alt="Dental Equipment">
+        <div class="grid-item-overlay"><div class="grid-item-text">Advanced Diagnostics</div></div>
+      </div>
+      <div class="grid-item reveal reveal-delay-1" data-cat="equipment" onclick="openLightbox('🛠️', 'Surgical Tools', 'High precision surgical equipment.')">
+        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" alt="Tools">
+        <div class="grid-item-overlay"><div class="grid-item-text">Precision Equipment</div></div>
+      </div>
+      <!-- Patients -->
+      <div class="grid-item reveal reveal-delay-2" data-cat="patients" onclick="openLightbox('😊', 'Happy Smiles', 'Our mission is your perfect smile.')">
+        <img src="https://images.unsplash.com/photo-1600170014763-7186835a22de?w=800&q=80" alt="Happy Patient">
+        <div class="grid-item-overlay"><div class="grid-item-text">Happy Smiles</div></div>
+      </div>
+      <div class="grid-item reveal" data-cat="patients" onclick="openLightbox('👨‍👩‍👧', 'Family Care', 'Providing dental care for all ages.')">
+        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" alt="Family">
+        <div class="grid-item-overlay"><div class="grid-item-text">Pediatric & Family Care</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const items = document.querySelectorAll('.grid-item');
+  items.forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.style.display = 'block';
+      item.style.animation = 'none';
+      item.offsetHeight;
+      item.style.animation = 'fadeUp 0.4s ease forwards';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+
+<footer style="background:#0d3535;padding:50px 20px 20px;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:36px;">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="font-size:24px;">🦷</div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;">SmileCare Dental</div></div>
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;line-height:1.7;">Your trusted dental clinic for comprehensive oral healthcare. Serving the community with compassion and expertise since 2010.</p>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Quick Links</h4>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li><a href="index.html" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Home</a></li>
+        <li><a href="about.html" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">About Us</a></li>
+        <li><a href="service.html" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Services</a></li>
+        <li><a href="gallery.html" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Gallery</a></li>
+        <li><a href="contact.html" style="color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;">Book Appointment</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Popular Services</h4>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Dental Implants</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Teeth Whitening</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Clear Aligners</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Root Canal Treatment</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Smile Designing</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Pediatric Dentistry</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Contact</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);">
+        <div>📞 +91 98765 43210</div>
+        <div>✉️ info@smilecaredental.com</div>
+        <div>📍 123 Dental Avenue, Maharashtra</div>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Popular Services</h4>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Dental Implants</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Teeth Whitening</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Clear Aligners</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Root Canal Treatment</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Smile Designing</li>
+        <li style="color:rgba(255,255,255,0.6);font-size:14px;">Pediatric Dentistry</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:#fff;font-weight:700;margin-bottom:14px;font-size:15px;">Contact</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);">
+        <div>📞 +91 98765 43210</div>
+        <div>✉️ info@smilecaredental.com</div>
+        <div>📍 123 Dental Avenue, Maharashtra</div>
+        <div>⏰ Mon–Sat: 9 AM – 7 PM</div>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:18px;text-align:center;color:rgba(255,255,255,0.7);font-size:13px;">
+    © 2025 SmileCare Dental Clinic. All rights reserved. | Designed with ❤️ for your smile
+  </div>
+</footer>
+
+<script>
+function toggleMobile() {
+  const m = document.getElementById('mobileMenu');
+  m.classList.toggle('open');
+}
+
+function openLightbox(emoji, title, desc) {
+  document.getElementById('lb-emoji').textContent = emoji;
+  document.getElementById('lb-title').textContent = title;
+  document.getElementById('lb-desc').textContent = desc;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+// Counter animation
+function animateCounter(id, target, suffix, duration) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let start = 0;
+  const step = Math.ceil(target / (duration / 16));
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = start + suffix;
+  }, 16);
+}
+
+// Run counters when home page is visible
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter('cnt-patients', 5000, '+', 1800);
+      animateCounter('cnt-years', 15, '+', 1200);
+      animateCounter('cnt-services', 38, '+', 1000);
+      observer.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const heroSection = document.querySelector('#page-home section');
+if (heroSection) observer.observe(heroSection);
+</script>
+</body>
+</html>
