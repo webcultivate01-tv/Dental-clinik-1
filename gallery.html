@@ -89,6 +89,19 @@
   /* Mobile menu */
   .mobile-menu { display: none; }
   .mobile-menu.open { display: block; }
+  #nav-desktop { display:flex; }
+  #nav-hamburger { display:none; }
+  #nav-book { display:inline-block; }
+  @media (max-width:768px) {
+    #nav-desktop { display:none !important; }
+    #nav-hamburger { display:block !important; }
+    #nav-book { display:none !important; }
+    .topbar > div { flex-direction:column; gap:3px; font-size:11px; text-align:center; }
+    .grid-masonry { grid-template-columns:1fr 1fr !important; }
+  }
+  @media (max-width:480px) {
+    .grid-masonry { grid-template-columns:1fr !important; }
+  }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
@@ -133,7 +146,7 @@
         <div style="font-size:11px;color:var(--text-mid);font-weight:600;letter-spacing:0.5px;">Advanced Dental Care</div>
       </div>
     </div>
-    <div style="display:flex;gap:28px;align-items:center;" class="hidden md:flex">
+    <div style="display:flex;gap:28px;align-items:center;" id="nav-desktop">
       <a href="index.html" class="nav-link">Home</a>
       <a href="about.html" class="nav-link">About</a>
       <a href="service.html" class="nav-link">Services</a>
@@ -141,8 +154,8 @@
       <a href="contact.html" class="nav-link">Contact</a>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <a href="contact.html" class="btn-primary" style="text-decoration:none;">Book Appointment</a>
-      <button onclick="toggleMobile()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--teal-dark);" class="md:hidden">☰</button>
+      <a href="contact.html" class="btn-primary" id="nav-book" style="text-decoration:none;">Book Appointment</a>
+      <button onclick="toggleMobile()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--teal-dark);" id="nav-hamburger">☰</button>
     </div>
   </div>
   <!-- Mobile Menu -->
