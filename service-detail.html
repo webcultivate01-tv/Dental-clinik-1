@@ -38,6 +38,9 @@
   .section-title { font-size:clamp(28px,4vw,38px); color:var(--text-dark); line-height:1.25; }
   .mobile-menu { display:none; }
   .mobile-menu.open { display:block; }
+  .mobile-menu .nav-link { display:block; padding:12px 16px; border-radius:10px; margin-bottom:2px; }
+  .mobile-menu .nav-link:hover, .mobile-menu .nav-link:active { background:var(--teal-pale); color:var(--teal-dark); }
+  .mobile-menu .nav-link::after { display:none; }
   #nav-desktop { display:flex; }
   #nav-hamburger { display:none; }
   #nav-book { display:inline-block; }
@@ -465,7 +468,7 @@
 
 <!-- Hero -->
 <section style="position:relative;min-height:48vh;display:flex;align-items:center;overflow:hidden;">
-  <img id="detail-hero-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"/>
+  <img id="detail-hero-img" src="https://plus.unsplash.com/premium_photo-1744142823266-a3169d01aa00?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8RGVudGFsJTIwQ3Jvd25zJTIwZGVudGFsJTIwY2xpbmljfGVufDB8fDB8fHww" alt="Dental Crowns" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;"/>
   <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,25,25,0.82) 0%,rgba(4,25,25,0.45) 60%,rgba(4,25,25,0.05) 100%);z-index:1;"></div>
   <div style="max-width:1200px;margin:0 auto;padding:60px 24px;position:relative;z-index:2;width:100%;">
     <span id="detail-cat-badge" style="display:inline-block;font-size:11px;font-weight:700;padding:5px 14px;border-radius:50px;margin-bottom:14px;"></span>
