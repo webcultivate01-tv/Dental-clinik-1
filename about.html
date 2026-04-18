@@ -105,7 +105,7 @@
     margin-bottom:24px;
     opacity:0; animation:fadeUp 0.7s 0.5s ease forwards;
   }
-  .hero-title em { color:#7de8e8; font-style:italic; }
+  .hero-title em { color:#7de8e8; font-style:normal; font-family:'Playfair Display',serif; }
   .hero-sub {
     color:rgba(255,255,255,0.75);
     font-size:17px; line-height:1.7; max-width:500px;
@@ -260,32 +260,47 @@
   /* ══════════════════════════════════
      JOURNEY / TIMELINE
   ══════════════════════════════════ */
-  .timeline-section { padding:90px 20px; background:#fff; }
+  .timeline-section { padding:80px 20px; background:#fff; }
+  .timeline-section .section-tag { background:var(--teal-pale); color:var(--teal-dark); }
+  .timeline-section .section-title { color:var(--text-dark); }
   .timeline-inner { max-width:900px; margin:0 auto; }
-  .timeline { position:relative; margin-top:50px; }
+  .timeline { position:relative; }
   .timeline::before {
     content:''; position:absolute; left:50%; top:0; bottom:0;
     width:2px; background:var(--teal-pale); transform:translateX(-50%);
+    z-index:0;
   }
-  .tl-item { display:flex; gap:40px; margin-bottom:50px; align-items:flex-start; }
-  .tl-item:nth-child(even) { flex-direction:row-reverse; }
+  .tl-item {
+    display:grid; grid-template-columns:1fr 80px 1fr;
+    gap:0; margin-bottom:48px; align-items:flex-start;
+    position:relative; z-index:1;
+  }
   .tl-content {
-    flex:1; background:var(--teal-xpale); border-radius:18px;
-    padding:24px; position:relative;
-    transition:transform 0.2s;
+    background:var(--teal-xpale);
+    border:1.5px solid #e0f0f0;
+    border-radius:18px; padding:22px 24px;
+    transition:transform 0.3s, box-shadow 0.3s;
   }
-  .tl-content:hover { transform:scale(1.02); }
-  .tl-item:nth-child(odd) .tl-content { text-align:right; }
-  .tl-dot {
-    width:44px; height:44px; border-radius:50%;
+  .tl-content:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(13,110,110,0.12); border-color:var(--teal-light); }
+  .tl-item .tl-content { text-align:right; }
+  .tl-right .tl-content { text-align:left; }
+  .tl-empty { flex:1; }
+  .tl-center {
+    display:flex; flex-direction:column; align-items:center; gap:8px; padding-top:16px;
+    position:relative; z-index:2; background:#fff;
+  }
+  .tl-year-badge {
     background:var(--teal-dark); color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:800; font-size:13px; flex-shrink:0;
-    z-index:1; margin-top:10px;
-    box-shadow:0 0 0 6px var(--teal-pale);
+    font-size:12px; font-weight:800; padding:5px 12px;
+    border-radius:50px; letter-spacing:0.5px; white-space:nowrap;
+  }
+  .tl-circle {
+    width:14px; height:14px; border-radius:50%;
+    background:var(--teal-dark); box-shadow:0 0 0 4px var(--teal-pale);
+    flex-shrink:0;
   }
   .tl-year { font-size:11px; font-weight:800; letter-spacing:1px; color:var(--teal-mid); text-transform:uppercase; margin-bottom:6px; }
-  .tl-title { font-size:17px; font-weight:700; color:var(--text-dark); margin-bottom:6px; font-family:'Nunito',sans-serif; }
+  .tl-title { font-size:16px; font-weight:700; color:var(--text-dark); margin-bottom:6px; font-family:'Nunito',sans-serif; }
   .tl-desc { font-size:13px; color:var(--text-mid); line-height:1.7; }
 
   /* ══════════════════════════════════
@@ -381,17 +396,17 @@
     .hero-content { padding:60px 20px 30px; }
     .story-inner { grid-template-columns:1fr; gap:40px; }
     .story-img-wrap img { height:260px; }
-    .timeline::before { left:20px; }
-    .tl-item, .tl-item:nth-child(even) { flex-direction:column; padding-left:50px; }
-    .tl-dot { position:absolute; left:0; }
-    .tl-item { position:relative; }
-    .tl-item:nth-child(odd) .tl-content { text-align:left; }
+    .timeline::before { left:24px; }
+    .tl-item, .tl-item.tl-right { grid-template-columns:48px 1fr !important; }
+    .tl-item .tl-content, .tl-item.tl-right .tl-content { text-align:left !important; grid-column:2; grid-row:1; }
+    .tl-item .tl-center, .tl-item.tl-right .tl-center { grid-column:1; grid-row:1; padding-top:18px; }
+    .tl-item .tl-empty, .tl-item.tl-right .tl-empty { display:none !important; }
+    .tl-year-badge { font-size:10px; padding:3px 7px; }
     .mini-cards { grid-template-columns:1fr 1fr; }
     .why-grid { grid-template-columns:1fr 1fr !important; }
     .team-grid { grid-template-columns:1fr 1fr !important; }
     .testi-grid { grid-template-columns:1fr !important; }
-    #stats-strip > div { padding:8px 14px; border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.1); width:50%; }
-    #stats-strip > div:nth-child(odd) { border-right:1px solid rgba(255,255,255,0.15) !important; }
+    #stats-strip > div { border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.1); }
     .section-title { font-size:26px !important; }
     [style*="font-size:clamp(36px"] { font-size:28px !important; }
     [style*="font-size:clamp(28px"] { font-size:22px !important; }
@@ -478,27 +493,27 @@
 </section>
 
 <!-- ════ STATS STRIP ════ -->
-<div style="background:var(--teal-dark);padding:16px 20px;">
-  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:center;flex-wrap:wrap;gap:0;" id="stats-strip">
-    <div style="text-align:center;padding:10px 24px;border-right:1px solid rgba(255,255,255,0.15);">
-      <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;" id="stat-patients">0+</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:2px;">Happy Patients</div>
+<div style="background:var(--teal-dark);padding:20px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-around;flex-wrap:wrap;gap:0;" id="stats-strip">
+    <div style="text-align:center;padding:14px 20px;flex:1;min-width:120px;border-right:1px solid rgba(255,255,255,0.15);">
+      <div style="font-size:clamp(28px,4vw,42px);font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;line-height:1;" id="stat-patients">0+</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;margin-top:6px;letter-spacing:0.5px;">Happy Patients</div>
     </div>
-    <div style="text-align:center;padding:10px 24px;border-right:1px solid rgba(255,255,255,0.15);">
-      <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;" id="stat-services">0+</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:2px;">Dental Services</div>
+    <div style="text-align:center;padding:14px 20px;flex:1;min-width:120px;border-right:1px solid rgba(255,255,255,0.15);">
+      <div style="font-size:clamp(28px,4vw,42px);font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;line-height:1;" id="stat-services">0+</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;margin-top:6px;letter-spacing:0.5px;">Dental Services</div>
     </div>
-    <div style="text-align:center;padding:10px 24px;border-right:1px solid rgba(255,255,255,0.15);">
-      <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;" id="stat-doctors">0</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:2px;">Expert Doctors</div>
+    <div style="text-align:center;padding:14px 20px;flex:1;min-width:120px;border-right:1px solid rgba(255,255,255,0.15);">
+      <div style="font-size:clamp(28px,4vw,42px);font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;line-height:1;" id="stat-doctors">0</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;margin-top:6px;letter-spacing:0.5px;">Expert Doctors</div>
     </div>
-    <div style="text-align:center;padding:10px 24px;border-right:1px solid rgba(255,255,255,0.15);">
-      <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;" id="stat-branches">0</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:2px;">Clinic Branches</div>
+    <div style="text-align:center;padding:14px 20px;flex:1;min-width:120px;border-right:1px solid rgba(255,255,255,0.15);">
+      <div style="font-size:clamp(28px,4vw,42px);font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;line-height:1;" id="stat-branches">0</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;margin-top:6px;letter-spacing:0.5px;">Clinic Branches</div>
     </div>
-    <div style="text-align:center;padding:10px 24px;">
-      <div style="font-size:22px;font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;">24/7</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;margin-top:2px;">Emergency Care</div>
+    <div style="text-align:center;padding:14px 20px;flex:1;min-width:120px;">
+      <div style="font-size:clamp(28px,4vw,42px);font-weight:800;color:#5dd8d8;font-family:'Playfair Display',serif;line-height:1;">24/7</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:600;margin-top:6px;letter-spacing:0.5px;">Emergency Care</div>
     </div>
   </div>
 </div>
@@ -633,43 +648,65 @@
       <div class="section-tag">Our Journey</div>
       <h2 class="section-title">14 Years of Smiles</h2>
     </div>
-    <div class="timeline">
+
+    <div class="timeline" style="margin-top:56px;">
+
+      <!-- 2010 — Left -->
       <div class="tl-item reveal">
         <div class="tl-content">
           <div class="tl-year">2010</div>
           <div class="tl-title">Founded SmileCare</div>
           <div class="tl-desc">Opened our first clinic in Nagpur with 3 chairs and a dream to make quality dental care accessible to all.</div>
         </div>
-        <div class="tl-dot">2010</div>
-        <div style="flex:1;"></div>
+        <div class="tl-center">
+          <div class="tl-year-badge">2010</div>
+          <div class="tl-circle"></div>
+        </div>
+        <div class="tl-empty"></div>
       </div>
-      <div class="tl-item reveal">
-        <div style="flex:1;"></div>
-        <div class="tl-dot">2014</div>
+
+      <!-- 2014 — Right -->
+      <div class="tl-item tl-right reveal">
+        <div class="tl-empty"></div>
+        <div class="tl-center">
+          <div class="tl-year-badge">2014</div>
+          <div class="tl-circle"></div>
+        </div>
         <div class="tl-content">
           <div class="tl-year">2014</div>
           <div class="tl-title">Expanded to 3 Branches</div>
           <div class="tl-desc">Opened two new branches across Maharashtra, serving 5,000+ patients annually.</div>
         </div>
       </div>
+
+      <!-- 2018 — Left -->
       <div class="tl-item reveal">
         <div class="tl-content">
           <div class="tl-year">2018</div>
           <div class="tl-title">Launched Digital Dentistry</div>
           <div class="tl-desc">Introduced 3D scanning, CAD/CAM crowns, and digital smile design — a first in the region.</div>
         </div>
-        <div class="tl-dot">2018</div>
-        <div style="flex:1;"></div>
+        <div class="tl-center">
+          <div class="tl-year-badge">2018</div>
+          <div class="tl-circle"></div>
+        </div>
+        <div class="tl-empty"></div>
       </div>
-      <div class="tl-item reveal">
-        <div style="flex:1;"></div>
-        <div class="tl-dot">2023</div>
+
+      <!-- 2023 — Right -->
+      <div class="tl-item tl-right reveal">
+        <div class="tl-empty"></div>
+        <div class="tl-center">
+          <div class="tl-year-badge">2023</div>
+          <div class="tl-circle"></div>
+        </div>
         <div class="tl-content">
           <div class="tl-year">2023</div>
           <div class="tl-title">Best Dental Clinic Award</div>
           <div class="tl-desc">Recognized as Maharashtra's Best Dental Clinic by the Indian Dental Association. 15,000+ lives transformed.</div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -877,6 +914,10 @@
 </a>
 
 <script>
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });

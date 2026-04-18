@@ -297,17 +297,17 @@
 </section>
 
 <!-- Lightbox -->
-<div id="lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;align-items:center;justify-content:center;" onclick="closeLb()">
-  <div style="position:relative;max-width:90vw;max-height:90vh;" onclick="event.stopPropagation()">
-    <img id="lb-img" src="" alt="" style="max-width:90vw;max-height:82vh;border-radius:12px;object-fit:contain;display:block;"/>
-    <div id="lb-caption" style="text-align:center;color:rgba(255,255,255,0.75);font-size:14px;margin-top:10px;font-family:'Nunito',sans-serif;"></div>
-  </div>
-  <!-- Close -->
-  <button onclick="closeLb()" style="position:fixed;top:20px;right:24px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;line-height:1;opacity:0.8;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">✕</button>
-  <!-- Prev -->
-  <button onclick="event.stopPropagation();moveLb(-1)" style="position:fixed;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:28px;cursor:pointer;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">&#8592;</button>
-  <!-- Next -->
-  <button onclick="event.stopPropagation();moveLb(1)" style="position:fixed;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:28px;cursor:pointer;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">&#8594;</button>
+<div id="lb" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:2000;align-items:center;justify-content:center;flex-direction:column;" onclick="closeLb()">
+  <!-- Image -->
+  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()" style="max-width:92vw;max-height:85vh;object-fit:contain;display:block;border-radius:8px;"/>
+  <!-- Caption -->
+  <div id="lb-caption" style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:12px;font-family:'Nunito',sans-serif;text-align:center;"></div>
+  <!-- Close — top right -->
+  <button onclick="closeLb()" style="position:fixed;top:16px;right:20px;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1;padding:4px 8px;opacity:0.7;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">✕</button>
+  <!-- Prev — left -->
+  <button onclick="event.stopPropagation();moveLb(-1)" style="position:fixed;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:32px;cursor:pointer;padding:8px;opacity:0.7;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">‹</button>
+  <!-- Next — right -->
+  <button onclick="event.stopPropagation();moveLb(1)" style="position:fixed;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:32px;cursor:pointer;padding:8px;opacity:0.7;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">›</button>
 </div>
 
 <footer style="background:#0d3535;">
@@ -402,10 +402,11 @@ function toggleMobile() {
 }
 
 // Gallery Lightbox
-const lbImgs = Array.from(document.querySelectorAll('.grid-item img'));
+let lbImgs = [];
 let lbIdx = 0;
 
 function openLb(i) {
+  lbImgs = Array.from(document.querySelectorAll('.grid-item img'));
   lbIdx = i;
   const lb = document.getElementById('lb');
   document.getElementById('lb-img').src = lbImgs[i].src;
@@ -438,47 +439,6 @@ const revObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-}
-
-function openLightbox(emoji, title, desc) {
-  document.getElementById('lb-emoji').textContent = emoji;
-  document.getElementById('lb-title').textContent = title;
-  document.getElementById('lb-desc').textContent = desc;
-  document.getElementById('lightbox').classList.add('open');
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
-
-// Counter animation
-function animateCounter(id, target, suffix, duration) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  let start = 0;
-  const step = Math.ceil(target / (duration / 16));
-  const timer = setInterval(() => {
-    start += step;
-    if (start >= target) { start = target; clearInterval(timer); }
-    el.textContent = start + suffix;
-  }, 16);
-}
-
-// Run counters when home page is visible
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      animateCounter('cnt-patients', 5000, '+', 1800);
-      animateCounter('cnt-years', 15, '+', 1200);
-      animateCounter('cnt-services', 38, '+', 1000);
-      observer.disconnect();
-    }
-  });
-}, { threshold: 0.3 });
-const heroSection = document.querySelector('#page-home section');
-if (heroSection) observer.observe(heroSection);
 </script>
 </body>
 </html>
