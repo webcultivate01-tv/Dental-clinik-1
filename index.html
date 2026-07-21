@@ -36,6 +36,8 @@
 
   /* Hero */
   .hero { background: linear-gradient(135deg, #0a4f4f 0%, #0d6e6e 40%, #0f8080 70%, #12a0a0 100%); position: relative; overflow: hidden; }
+  .hero-img-zoom { animation: heroImgZoom 16s ease-out forwards; }
+  @keyframes heroImgZoom { from { transform: scale(1.1); } to { transform: scale(1); } }
 
   /* Section titles */
   .section-tag { display: inline-block; background: var(--teal-pale); color: var(--teal-dark); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: 12px; }
@@ -88,10 +90,12 @@
   /* Round Image */
   .round-img-wrap { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 16px; border: 3px solid #e5f2f2; box-shadow: 0 8px 24px rgba(13,110,110,0.15); transition: all 0.4s ease; position: relative; }
   .round-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-  .service-card-offer { text-align:center; cursor:default; background: #fff; padding: 25px 15px; border-radius: 20px; transition: all 0.4s ease; border: 1px solid transparent; }
-  .service-card-offer:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(13,110,110,0.1); border-color: #e5f2f2; }
-  .service-card-offer:hover .round-img-wrap { border-color: var(--teal-light); box-shadow: 0 12px 28px rgba(13,110,110,0.25); transform: scale(1.05); }
-  .service-card-offer:hover .round-img-wrap img { transform: scale(1.15); }
+  .service-card-offer { text-align:center; cursor:default; padding: 25px 15px; }
+  .service-card-offer h3, .service-card-offer p { transition: all 0.35s ease; }
+  .service-card-offer:hover .round-img-wrap { border-color: var(--teal-light); box-shadow: 0 12px 28px rgba(13,110,110,0.25); transform: scale(1.08); }
+  .service-card-offer:hover .round-img-wrap img { transform: scale(1.18); }
+  .service-card-offer:hover h3 { color: var(--teal-light); transform: scale(1.06); }
+  .service-card-offer:hover p { color: var(--text-dark); transform: scale(1.04); }
 
   /* Topbar */
   .topbar { background: var(--teal-dark); color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; padding: 7px 0; }
@@ -143,10 +147,28 @@
   .blog-img { width:100%; height:180px; object-fit:cover; transition:transform 0.4s; }
   .blog-card:hover .blog-img { transform:scale(1.04); }
   .blog-tag { display:inline-block; background:var(--teal-pale); color:var(--teal-dark); font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px; }
+  .blog-img-wrap { position:relative; overflow:hidden; }
+  .blog-float-tag { position:absolute; top:14px; left:14px; z-index:2; background:rgba(255,255,255,0.92); backdrop-filter:blur(6px); color:var(--teal-dark); font-size:11px; font-weight:800; padding:5px 12px; border-radius:50px; letter-spacing:0.3px; box-shadow:0 4px 12px rgba(13,110,110,0.12); }
+  .blog-meta { display:flex; align-items:center; gap:14px; font-size:12px; color:var(--text-mid); font-weight:600; margin-bottom:12px; }
+  .blog-meta span { display:inline-flex; align-items:center; gap:5px; }
+  .blog-readmore { display:inline-flex; align-items:center; gap:6px; color:var(--teal-dark); font-weight:800; font-size:13px; text-decoration:none; transition:gap 0.2s; }
+  .blog-readmore:hover { gap:11px; }
 
   /* ===== INSURANCE SECTION ===== */
-  .insurance-logo { background:#fff; border:1.5px solid #e5f2f2; border-radius:14px; padding:16px 22px; display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--text-mid); font-size:14px; transition:all 0.3s; }
-  .insurance-logo:hover { border-color:var(--teal-light); color:var(--teal-dark); box-shadow:0 6px 20px rgba(13,110,110,0.1); transform:translateY(-2px); }
+  .ins-benefits { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:44px; }
+  .ins-benefit { display:inline-flex; align-items:center; gap:9px; background:#fff; border:1.5px solid #e5f2f2; border-radius:50px; padding:9px 18px 9px 10px; font-size:13.5px; font-weight:700; color:var(--text-dark); box-shadow:0 4px 14px rgba(13,110,110,0.05); }
+  .ins-benefit-ic { width:30px; height:30px; border-radius:50%; background:var(--teal-pale); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ins-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; }
+  .insurance-logo { position:relative; background:#fff; border:1.5px solid #e5f2f2; border-radius:18px; padding:22px 18px; display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; transition:all 0.3s; overflow:hidden; }
+  .insurance-logo::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal-dark),var(--teal-light)); transform:scaleX(0); transform-origin:left; transition:transform 0.35s; }
+  .insurance-logo:hover { border-color:var(--teal-light); box-shadow:0 14px 34px rgba(13,110,110,0.14); transform:translateY(-4px); }
+  .insurance-logo:hover::before { transform:scaleX(1); }
+  .ins-icon { width:56px; height:56px; border-radius:16px; background:var(--teal-xpale); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.3s; }
+  .insurance-logo:hover .ins-icon { background:var(--teal-dark); }
+  .insurance-logo:hover .ins-icon svg { stroke:#fff; }
+  .ins-icon svg { transition:stroke 0.3s; }
+  .ins-name { font-weight:800; color:var(--text-dark); font-size:14.5px; line-height:1.2; }
+  .ins-cashless { display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase; color:var(--teal-dark); background:var(--teal-pale); padding:3px 10px; border-radius:50px; }
 
   /* ===== PROCESS STEPS ===== */
   .process-step { display:flex; align-items:flex-start; gap:20px; padding:24px; background:#fff; border-radius:18px; border:1.5px solid #e5f2f2; transition:all 0.3s; }
@@ -246,6 +268,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="service.html" class="nav-link">Services</a>
       <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
@@ -259,6 +282,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="service.html" class="nav-link">Services</a>
       <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </div>
   </div>
@@ -266,7 +290,7 @@
 
 <!-- ==================== HERO ==================== -->
 <section style="position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;">
-  <img src="https://plus.unsplash.com/premium_photo-1674575132367-24b6228ac67f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjcwfHxkZW50YWwlMjBjbGluaWMlMjBkb2N0b3IlMjBhbmQlMjBwZXRpZW50JTIwaG9yaXpvbnRhbHxlbnwwfHwwfHx8MA%3D%3D=" alt="Dentist performing checkup on patient" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+  <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=2400&auto=format&fit=crop&q=85&ixlib=rb-4.1.0" alt="Dentist performing checkup on patient" class="hero-img-zoom" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
   <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,25,25,0.78) 0%,rgba(4,25,25,0.42) 55%,rgba(4,25,25,0.05) 100%);z-index:1;"></div>
   <div style="max-width:1200px;margin:0 auto;padding:100px 28px 110px;position:relative;z-index:2;width:100%;">
     <div class="fade-up" style="max-width:580px;">
@@ -512,7 +536,9 @@
     <div class="price-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
 
       <div class="price-card">
-        <div style="font-size:32px;margin-bottom:12px;">🦷</div>
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--teal-pale);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/><path d="m9.5 12 1.5 1.5 3-3"/></svg>
+        </div>
         <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:20px;margin-bottom:8px;">Basic Care</h3>
         <p style="font-size:13px;color:var(--text-mid);margin-bottom:20px;">Ideal for routine check-ups & preventive care.</p>
         <div style="font-size:36px;font-weight:800;color:var(--teal-dark);margin-bottom:4px;">₹500<span style="font-size:15px;color:var(--text-mid);font-weight:600;">/visit</span></div>
@@ -528,7 +554,9 @@
 
       <div class="price-card popular" style="background:linear-gradient(160deg,#f0fafa,#e0f5f5);">
         <div class="price-badge">Most Popular</div>
-        <div style="font-size:32px;margin-bottom:12px;">✨</div>
+        <div style="width:56px;height:56px;border-radius:16px;background:rgba(244,160,36,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/><circle cx="12" cy="12" r="2.5"/></svg>
+        </div>
         <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:20px;margin-bottom:8px;">Smile Makeover</h3>
         <p style="font-size:13px;color:var(--text-mid);margin-bottom:20px;">Complete cosmetic transformation package.</p>
         <div style="font-size:36px;font-weight:800;color:var(--teal-dark);margin-bottom:4px;">₹15,000<span style="font-size:15px;color:var(--text-mid);font-weight:600;">+</span></div>
@@ -544,7 +572,9 @@
       </div>
 
       <div class="price-card">
-        <div style="font-size:32px;margin-bottom:12px;">🏆</div>
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--teal-pale);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 5 18.5V20"/><circle cx="9.5" cy="8" r="3"/><path d="M19 20v-1.5a3 3 0 0 0-2.2-2.9"/><path d="M15 4.3a3 3 0 0 1 0 5.8"/></svg>
+        </div>
         <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:20px;margin-bottom:8px;">Family Plan</h3>
         <p style="font-size:13px;color:var(--text-mid);margin-bottom:20px;">Annual care plan for your entire family.</p>
         <div style="font-size:36px;font-weight:800;color:var(--teal-dark);margin-bottom:4px;">₹8,000<span style="font-size:15px;color:var(--text-mid);font-weight:600;">/year</span></div>
@@ -560,77 +590,164 @@
 
     </div>
     <p style="text-align:center;color:var(--text-mid);font-size:13px;margin-top:24px;">* Prices may vary based on individual cases. Free consultation available.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:36px;">
+      <div style="display:flex;align-items:center;gap:12px;background:var(--teal-xpale);border-radius:14px;padding:14px 18px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:var(--text-dark);">No Hidden Fees</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--teal-xpale);border-radius:14px;padding:14px 18px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:var(--text-dark);">Easy EMI Options</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--teal-xpale);border-radius:14px;padding:14px 18px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:var(--text-dark);">Free First Consultation</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--teal-xpale);border-radius:14px;padding:14px 18px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:var(--text-dark);">Insurance Accepted</span>
+      </div>
+    </div>
   </div>
 </section>
 
 
 
 <!-- ==================== INSURANCE ==================== -->
-<section style="padding:70px 20px;background:var(--teal-xpale);">
-  <div style="max-width:1100px;margin:0 auto;text-align:center;">
-    <div class="section-tag">Insurance</div>
+<section style="padding:80px 20px;background:var(--teal-xpale);position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-120px;right:-120px;width:340px;height:340px;background:rgba(18,160,160,0.06);border-radius:50%;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-140px;left:-100px;width:300px;height:300px;background:rgba(18,160,160,0.05);border-radius:50%;pointer-events:none;"></div>
+  <div style="max-width:1100px;margin:0 auto;text-align:center;position:relative;">
+    <div class="section-tag">Insurance &amp; Cashless</div>
     <h2 class="section-title" style="margin-bottom:12px;">We Accept All Major Insurance</h2>
-    <p style="color:var(--text-mid);font-size:15px;margin-bottom:40px;">We are empanelled with leading health insurance providers for cashless treatment.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;">
-      <div class="insurance-logo">🏥 Star Health</div>
-      <div class="insurance-logo">💼 HDFC Ergo</div>
-      <div class="insurance-logo">🛡️ ICICI Lombard</div>
-      <div class="insurance-logo">🌿 Niva Bupa</div>
-      <div class="insurance-logo">🔵 United India</div>
-      <div class="insurance-logo">⚕️ New India</div>
-      <div class="insurance-logo">🏦 Bajaj Allianz</div>
-      <div class="insurance-logo">💊 Care Health</div>
+    <p style="color:var(--text-mid);font-size:15px;max-width:620px;margin:0 auto 36px;line-height:1.7;">We are empanelled with leading health insurance providers so you can enjoy hassle-free, cashless dental treatment.</p>
+
+    <!-- Benefit chips -->
+    <div class="ins-benefits">
+      <span class="ins-benefit"><span class="ins-benefit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>100% Cashless Facility</span>
+      <span class="ins-benefit"><span class="ins-benefit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Quick Claim Approval</span>
+      <span class="ins-benefit"><span class="ins-benefit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/></svg></span>Zero Paperwork Hassle</span>
+      <span class="ins-benefit"><span class="ins-benefit-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></span>Dedicated Claims Desk</span>
     </div>
-    <p style="margin-top:20px;font-size:13px;color:var(--text-mid);">Don't see your provider? <a href="contact.html" style="color:var(--teal-dark);font-weight:700;text-decoration:none;">Contact us</a> — we likely accept it too.</p>
+
+    <!-- Provider cards -->
+    <div class="ins-grid">
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="ins-name">Star Health</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4M10 14h4"/></svg></div>
+        <div class="ins-name">HDFC Ergo</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="ins-name">ICICI Lombard</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div>
+        <div class="ins-name">Niva Bupa</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/></svg></div>
+        <div class="ins-name">United India</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M12 10v6M9 13h6"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></div>
+        <div class="ins-name">New India</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div>
+        <div class="ins-name">Bajaj Allianz</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+      <div class="insurance-logo">
+        <div class="ins-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2a.3.3 0 0 0-.2.3M8 15a6 6 0 0 0 12 0v-3a6 6 0 0 0-6-6H9a1 1 0 0 1-1-1V2"/><path d="M14 9h.01"/><path d="M17 15h.01"/></svg></div>
+        <div class="ins-name">Care Health</div>
+        <span class="ins-cashless"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cashless</span>
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-size:14px;color:var(--text-mid);">Don't see your provider? <a href="contact.html" style="color:var(--teal-dark);font-weight:800;text-decoration:none;">Contact us</a> — we likely accept it too.</p>
   </div>
 </section>
 
 <!-- ==================== BLOG ==================== -->
- <section style="padding:70px 20px;background:#fff;">
+ <section style="padding:80px 20px;background:#fff;">
 
   <div style="max-width:1200px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:50px;">
-      <div class="section-tag">Dental Tips</div>
-      <h2 class="section-title">From Our Blog</h2>
-      <p style="color:var(--text-mid);margin-top:12px;font-size:16px;">Expert advice for a healthier smile, straight from our dentists.</p>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:44px;">
+      <div style="max-width:560px;">
+        <div class="section-tag">Dental Tips</div>
+        <h2 class="section-title" style="margin-bottom:12px;">From Our Blog</h2>
+        <p style="color:var(--text-mid);font-size:16px;line-height:1.7;">Expert advice for a healthier smile, straight from our dentists — from daily care to the latest treatments.</p>
+      </div>
+      <a href="blog.html" class="btn-primary" style="text-decoration:none;white-space:nowrap;">View All Articles →</a>
     </div>
     <div class="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
 
-      <div class="blog-card">
-        <div style="overflow:hidden;border-radius:16px 16px 0 0;">
+      <a href="blog-post-1.html" class="blog-card" style="text-decoration:none;color:inherit;display:block;">
+        <div class="blog-img-wrap" style="border-radius:18px 18px 0 0;">
+          <span class="blog-float-tag">Oral Health</span>
           <img class="blog-img" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80" alt="Oral hygiene"/>
         </div>
-        <div style="padding:22px;">
-          <span class="blog-tag">Oral Health</span>
-          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;margin:10px 0 8px;color:var(--text-dark);">10 Habits for Healthier Teeth</h3>
-          <p style="font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:16px;">Small daily habits can make a huge difference in your oral health. Here's what top dentists recommend...</p>
-          <a href="#" style="color:var(--teal-dark);font-weight:700;font-size:13px;text-decoration:none;">Read More →</a>
+        <div style="padding:24px;">
+          <div class="blog-meta">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Jul 12, 2026</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5 min read</span>
+          </div>
+          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;margin:0 0 8px;color:var(--text-dark);line-height:1.35;">10 Habits for Healthier Teeth</h3>
+          <p style="font-size:13.5px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Small daily habits can make a huge difference in your oral health. Here's what top dentists recommend...</p>
+          <span class="blog-readmore">Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </div>
-      </div>
+      </a>
 
-      <div class="blog-card">
-        <div style="overflow:hidden;border-radius:16px 16px 0 0;">
+      <a href="blog-post-2.html" class="blog-card" style="text-decoration:none;color:inherit;display:block;">
+        <div class="blog-img-wrap" style="border-radius:18px 18px 0 0;">
+          <span class="blog-float-tag">Implants</span>
           <img class="blog-img" src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?auto=format&fit=crop&w=600&q=80" alt="Implants"/>
         </div>
-        <div style="padding:22px;">
-          <span class="blog-tag">Implants</span>
-          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;margin:10px 0 8px;color:var(--text-dark);">Are Dental Implants Right for You?</h3>
-          <p style="font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:16px;">Implants are a permanent solution for missing teeth. But who is an ideal candidate? Find out here...</p>
-          <a href="#" style="color:var(--teal-dark);font-weight:700;font-size:13px;text-decoration:none;">Read More →</a>
+        <div style="padding:24px;">
+          <div class="blog-meta">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Jul 5, 2026</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>6 min read</span>
+          </div>
+          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;margin:0 0 8px;color:var(--text-dark);line-height:1.35;">Are Dental Implants Right for You?</h3>
+          <p style="font-size:13.5px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Implants are a permanent solution for missing teeth. But who is an ideal candidate? Find out here...</p>
+          <span class="blog-readmore">Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </div>
-      </div>
+      </a>
 
-      <div class="blog-card">
-        <div style="overflow:hidden;border-radius:16px 16px 0 0;">
+      <a href="blog-post-3.html" class="blog-card" style="text-decoration:none;color:inherit;display:block;">
+        <div class="blog-img-wrap" style="border-radius:18px 18px 0 0;">
+          <span class="blog-float-tag">Kids Dentistry</span>
           <img class="blog-img" src="https://images.unsplash.com/photo-1683520701349-3475cc3044c8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8S2lkcyUyMERlbnRpc3RyeSUyMGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D" alt="Kids dental"/>
         </div>
-        <div style="padding:22px;">
-          <span class="blog-tag">Kids Dentistry</span>
-          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;margin:10px 0 8px;color:var(--text-dark);">When Should Your Child First See a Dentist?</h3>
-          <p style="font-size:13px;color:var(--text-mid);line-height:1.6;margin-bottom:16px;">Early dental visits set the foundation for a lifetime of healthy teeth. Here's the right age to start...</p>
-          <a href="#" style="color:var(--teal-dark);font-weight:700;font-size:13px;text-decoration:none;">Read More →</a>
+        <div style="padding:24px;">
+          <div class="blog-meta">
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Jun 28, 2026</span>
+            <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>4 min read</span>
+          </div>
+          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:18px;margin:0 0 8px;color:var(--text-dark);line-height:1.35;">When Should Your Child First See a Dentist?</h3>
+          <p style="font-size:13.5px;color:var(--text-mid);line-height:1.65;margin-bottom:16px;">Early dental visits set the foundation for a lifetime of healthy teeth. Here's the right age to start...</p>
+          <span class="blog-readmore">Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
@@ -741,6 +858,7 @@
           <li><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;transition:color 0.2s;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>About Us</a></li>
           <li><a href="service.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;transition:color 0.2s;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Services</a></li>
           <li><a href="gallery.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;transition:color 0.2s;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Gallery</a></li>
+          <li><a href="blog.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;transition:color 0.2s;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Blog</a></li>
           <li><a href="contact.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;transition:color 0.2s;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Book Appointment</a></li>
         </ul>
       </div>

@@ -100,10 +100,15 @@
     #nav-hamburger { display:block !important; }
     #nav-book { display:none !important; }
     .topbar > div { flex-direction:column; gap:3px; font-size:11px; text-align:center; }
-    .grid-masonry { grid-template-columns:1fr 1fr !important; }
+    .grid-masonry { grid-template-columns:1fr 1fr !important; grid-auto-rows:180px !important; }
+    /* keep 'wide/big' spanning both columns, but never overflow */
+    .grid-item.big { grid-column:span 2; grid-row:span 2; }
   }
   @media (max-width:480px) {
-    .grid-masonry { grid-template-columns:1fr !important; }
+    .grid-masonry { grid-template-columns:1fr !important; grid-auto-rows:240px !important; }
+    /* single column: reset horizontal spans so nothing overflows */
+    .grid-item.wide, .grid-item.big { grid-column:span 1 !important; }
+    .grid-item.tall, .grid-item.big { grid-row:span 2; }
   }
 
   /* Scrollbar */
@@ -154,6 +159,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="service.html" class="nav-link">Services</a>
       <a href="gallery.html" class="nav-link active">Gallery</a>
+      <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
@@ -168,6 +174,7 @@
       <a href="about.html" class="nav-link">About</a>
       <a href="service.html" class="nav-link">Services</a>
       <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="blog.html" class="nav-link">Blog</a>
       <a href="contact.html" class="nav-link">Contact</a>
     </div>
   </div>
@@ -216,12 +223,21 @@
   }
 
   .grid-masonry {
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    grid-auto-rows:230px;
+    grid-auto-flow:dense;
+    gap:20px;
   }
   .grid-item {
-    border-radius:20px; overflow:hidden; position:relative; aspect-ratio:4/3; cursor:pointer;
+    border-radius:20px; overflow:hidden; position:relative; cursor:pointer;
     box-shadow:0 8px 30px rgba(13,110,110,0.08); background:#fff;
+    grid-row:span 1; grid-column:span 1;
   }
+  /* Mosaic size variants for a dynamic, premium layout */
+  .grid-item.tall { grid-row:span 2; }
+  .grid-item.wide { grid-column:span 2; }
+  .grid-item.big  { grid-row:span 2; grid-column:span 2; }
   .grid-item img {
     width:100%; height:100%; object-fit:cover; transition:transform 0.4s;
   }
@@ -251,46 +267,46 @@
   <div class="gallery-inner">
     <div class="grid-masonry" id="gallery-grid">
 
-      <div class="grid-item reveal" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Dental Clinic Interior"><div class="grid-item-overlay"><div class="grid-item-text">Clinic Reception</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Dental Clinic Interior"><div class="grid-item-overlay"><div class="grid-item-text">Clinic Reception</div></div></div>
       <div class="grid-item reveal" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1758812821349-1d2a4a96eecd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8VHJlYXRtZW50JTIwUm9vbSUyMGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D" alt="Treatment Room"><div class="grid-item-overlay"><div class="grid-item-text">Treatment Room</div></div></div>
       <div class="grid-item reveal" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Dental Clinic"><div class="grid-item-overlay"><div class="grid-item-text">Modern Clinic</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=800&q=80" alt="Dental Equipment"><div class="grid-item-overlay"><div class="grid-item-text">Advanced Equipment</div></div></div>
+      <div class="grid-item reveal big" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=800&q=80" alt="Dental Equipment"><div class="grid-item-overlay"><div class="grid-item-text">Advanced Equipment</div></div></div>
       <div class="grid-item reveal" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" alt="Dental Tools"><div class="grid-item-overlay"><div class="grid-item-text">Precision Tools</div></div></div>
       <div class="grid-item reveal" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" alt="Dental Checkup"><div class="grid-item-overlay"><div class="grid-item-text">Dental Checkup</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(6)"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" alt="Dentist at Work"><div class="grid-item-overlay"><div class="grid-item-text">Expert Dentist</div></div></div>
+      <div class="grid-item reveal wide" onclick="openLb(6)"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" alt="Dentist at Work"><div class="grid-item-overlay"><div class="grid-item-text">Expert Dentist</div></div></div>
       <div class="grid-item reveal" onclick="openLb(7)"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" alt="Clinic Interior"><div class="grid-item-overlay"><div class="grid-item-text">Clinic Interior</div></div></div>
       <div class="grid-item reveal" onclick="openLb(8)"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Dental Team"><div class="grid-item-overlay"><div class="grid-item-text">Our Dental Team</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(9)"><img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80" alt="Dental Implant"><div class="grid-item-overlay"><div class="grid-item-text">Dental Implants</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(9)"><img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80" alt="Dental Implant"><div class="grid-item-overlay"><div class="grid-item-text">Dental Implants</div></div></div>
       <div class="grid-item reveal" onclick="openLb(10)"><img src="https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=800&q=80" alt="Teeth Whitening"><div class="grid-item-overlay"><div class="grid-item-text">Teeth Whitening</div></div></div>
       <div class="grid-item reveal" onclick="openLb(11)"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80" alt="Dental X-Ray"><div class="grid-item-overlay"><div class="grid-item-text">Digital X-Ray</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(12)"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80" alt="Dental Surgery"><div class="grid-item-overlay"><div class="grid-item-text">Oral Surgery</div></div></div>
+      <div class="grid-item reveal wide" onclick="openLb(12)"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80" alt="Dental Surgery"><div class="grid-item-overlay"><div class="grid-item-text">Oral Surgery</div></div></div>
       <div class="grid-item reveal" onclick="openLb(13)"><img src="https://images.unsplash.com/photo-1758205307804-097f5437189f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZGVudGFsJTIwY2FyZSUyMGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D" alt="Dental Consultation"><div class="grid-item-overlay"><div class="grid-item-text">Patient Consultation</div></div></div>
       <div class="grid-item reveal" onclick="openLb(14)"><img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&q=80" alt="Dental Care"><div class="grid-item-overlay"><div class="grid-item-text">Gentle Dental Care</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(15)"><img src="https://plus.unsplash.com/premium_photo-1673547484609-caffc9c46c31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGFwcHklMjBwZXRpZW50JTIwZGVudGFsJTIwY2xpbmljfGVufDB8fDB8fHww" alt="Happy Patient"><div class="grid-item-overlay"><div class="grid-item-text">Happy Patient</div></div></div>
+      <div class="grid-item reveal big" onclick="openLb(15)"><img src="https://plus.unsplash.com/premium_photo-1673547484609-caffc9c46c31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGFwcHklMjBwZXRpZW50JTIwZGVudGFsJTIwY2xpbmljfGVufDB8fDB8fHww" alt="Happy Patient"><div class="grid-item-overlay"><div class="grid-item-text">Happy Patient</div></div></div>
       <div class="grid-item reveal" onclick="openLb(16)"><img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&q=80" alt="Smile Makeover"><div class="grid-item-overlay"><div class="grid-item-text">Smile Makeover</div></div></div>
       <div class="grid-item reveal" onclick="openLb(17)"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" alt="Orthodontics"><div class="grid-item-overlay"><div class="grid-item-text">Orthodontics</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(18)"><img src="https://images.unsplash.com/photo-1704455306925-1401c3012117?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVudGFsJTIwY2hhaXIlMjBkZW50YWwlMjBjbGluaWN8ZW58MHx8MHx8fDA%3D" alt="Dental Chair"><div class="grid-item-overlay"><div class="grid-item-text">Dental Chair</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(18)"><img src="https://images.unsplash.com/photo-1704455306925-1401c3012117?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVudGFsJTIwY2hhaXIlMjBkZW50YWwlMjBjbGluaWN8ZW58MHx8MHx8fDA%3D" alt="Dental Chair"><div class="grid-item-overlay"><div class="grid-item-text">Dental Chair</div></div></div>
       <div class="grid-item reveal" onclick="openLb(19)"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Doctor Team"><div class="grid-item-overlay"><div class="grid-item-text">Doctor Team</div></div></div>
       <div class="grid-item reveal" onclick="openLb(20)"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" alt="Root Canal"><div class="grid-item-overlay"><div class="grid-item-text">Root Canal Treatment</div></div></div>
       <div class="grid-item reveal" onclick="openLb(21)"><img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=800&q=80" alt="Laser Dentistry"><div class="grid-item-overlay"><div class="grid-item-text">Laser Dentistry</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(22)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Waiting Area"><div class="grid-item-overlay"><div class="grid-item-text">Waiting Area</div></div></div>
+      <div class="grid-item reveal wide" onclick="openLb(22)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Waiting Area"><div class="grid-item-overlay"><div class="grid-item-text">Waiting Area</div></div></div>
       <div class="grid-item reveal" onclick="openLb(23)"><img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" alt="Pediatric Dentistry"><div class="grid-item-overlay"><div class="grid-item-text">Pediatric Dentistry</div></div></div>
       <div class="grid-item reveal" onclick="openLb(24)"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" alt="Dental Instruments"><div class="grid-item-overlay"><div class="grid-item-text">Sterilized Instruments</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(25)"><img src="https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=800&q=80" alt="Cosmetic Dentistry"><div class="grid-item-overlay"><div class="grid-item-text">Cosmetic Dentistry</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(25)"><img src="https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=800&q=80" alt="Cosmetic Dentistry"><div class="grid-item-overlay"><div class="grid-item-text">Cosmetic Dentistry</div></div></div>
       <div class="grid-item reveal" onclick="openLb(26)"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80" alt="Dental Procedure"><div class="grid-item-overlay"><div class="grid-item-text">Dental Procedure</div></div></div>
       <div class="grid-item reveal" onclick="openLb(27)"><img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&q=80" alt="Braces Treatment"><div class="grid-item-overlay"><div class="grid-item-text">Braces Treatment</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(28)"><img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80" alt="Dental Crown"><div class="grid-item-overlay"><div class="grid-item-text">Dental Crown</div></div></div>
+      <div class="grid-item reveal big" onclick="openLb(28)"><img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80" alt="Dental Crown"><div class="grid-item-overlay"><div class="grid-item-text">Dental Crown</div></div></div>
       <div class="grid-item reveal" onclick="openLb(29)"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80" alt="Oral Health"><div class="grid-item-overlay"><div class="grid-item-text">Oral Health Check</div></div></div>
       <div class="grid-item reveal" onclick="openLb(30)"><img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&q=80" alt="Smile Design"><div class="grid-item-overlay"><div class="grid-item-text">Smile Design</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(31)"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" alt="Clinic Lab"><div class="grid-item-overlay"><div class="grid-item-text">In-House Lab</div></div></div>
+      <div class="grid-item reveal wide" onclick="openLb(31)"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" alt="Clinic Lab"><div class="grid-item-overlay"><div class="grid-item-text">In-House Lab</div></div></div>
       <div class="grid-item reveal" onclick="openLb(32)"><img src="https://images.unsplash.com/photo-1758206524132-72a2aa6639e2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8UGF0aWVudCUyMENvbnN1bHRhdGlvbiUyMGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D" alt="Patient Care"><div class="grid-item-overlay"><div class="grid-item-text">Patient Care</div></div></div>
       <div class="grid-item reveal" onclick="openLb(33)"><img src="https://plus.unsplash.com/premium_photo-1677174625197-eeca24305dd7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGVldGglMjBjbGVhbmluZyUyMGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D" alt="Dental Cleaning"><div class="grid-item-overlay"><div class="grid-item-text">Teeth Cleaning</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(34)"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Specialist Doctor"><div class="grid-item-overlay"><div class="grid-item-text">Specialist Doctor</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(34)"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Specialist Doctor"><div class="grid-item-overlay"><div class="grid-item-text">Specialist Doctor</div></div></div>
       <div class="grid-item reveal" onclick="openLb(35)"><img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=800&q=80" alt="Digital Scan"><div class="grid-item-overlay"><div class="grid-item-text">Digital Scan</div></div></div>
       <div class="grid-item reveal" onclick="openLb(36)"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80" alt="Gum Treatment"><div class="grid-item-overlay"><div class="grid-item-text">Gum Treatment</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(37)"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" alt="Dental Veneer"><div class="grid-item-overlay"><div class="grid-item-text">Dental Veneers</div></div></div>
+      <div class="grid-item reveal wide" onclick="openLb(37)"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" alt="Dental Veneer"><div class="grid-item-overlay"><div class="grid-item-text">Dental Veneers</div></div></div>
       <div class="grid-item reveal" onclick="openLb(38)"><img src="https://media.istockphoto.com/id/1309684245/photo/a-little-girl-being-treated-by-a-dentist.webp?a=1&b=1&s=612x612&w=0&k=20&c=tw857AzqWQUtNxH_IkruzPR4mzXobRzWo-lw5XZObu4=" alt="Consultation Room"><div class="grid-item-overlay"><div class="grid-item-text">Consultation Room</div></div></div>
-      <div class="grid-item reveal" onclick="openLb(39)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Sterilization"><div class="grid-item-overlay"><div class="grid-item-text">Sterilization Room</div></div></div>
+      <div class="grid-item reveal tall" onclick="openLb(39)"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" alt="Sterilization"><div class="grid-item-overlay"><div class="grid-item-text">Sterilization Room</div></div></div>
 
     </div>
   </div>
@@ -330,6 +346,7 @@
           <li><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>About Us</a></li>
           <li><a href="service.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Services</a></li>
           <li><a href="gallery.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Gallery</a></li>
+          <li><a href="blog.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Blog</a></li>
           <li><a href="contact.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:7px;" onmouseover="this.style.color='#5dd8d8'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>Book Appointment</a></li>
         </ul>
       </div>
